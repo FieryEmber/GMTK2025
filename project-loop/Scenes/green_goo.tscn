@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ca76njf3drisj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f2l2t"]
+
+[node name="Green Goo" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_f2l2t")
