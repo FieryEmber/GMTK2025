@@ -1,12 +1,37 @@
-[gd_scene load_steps=27 format=3 uid="uid://dxfbf4g57yf"]
+[gd_scene load_steps=34 format=3 uid="uid://dxfbf4g57yf"]
 
 [ext_resource type="Script" uid="uid://xmnpretlwywl" path="res://Scenes/mobius.gd" id="1_6vevg"]
 [ext_resource type="Texture2D" uid="uid://ruqcxkm1o10r" path="res://Scenes/Sprites/Mobius_Idle.png" id="2_7r1wa"]
+[ext_resource type="Texture2D" uid="uid://cxihkrhbltn3m" path="res://Scenes/Sprites/Mobius_Falling.png" id="2_ymrf7"]
 [ext_resource type="Texture2D" uid="uid://1t4oo047ad1u" path="res://Scenes/Sprites/Mobius_Run.png" id="3_emswm"]
 [ext_resource type="Texture2D" uid="uid://cc3fnlair24kt" path="res://Scenes/Sprites/Mobius_Jump.png" id="3_ymrf7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ymrf7"]
 size = Vector2(3, 6.7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2xijm"]
+atlas = ExtResource("2_ymrf7")
+region = Rect2(0, 0, 44, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_di5vw"]
+atlas = ExtResource("2_ymrf7")
+region = Rect2(44, 0, 44, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydkaj"]
+atlas = ExtResource("2_ymrf7")
+region = Rect2(88, 0, 44, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_phual"]
+atlas = ExtResource("2_ymrf7")
+region = Rect2(132, 0, 44, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o7swa"]
+atlas = ExtResource("2_ymrf7")
+region = Rect2(176, 0, 44, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjaf5"]
+atlas = ExtResource("2_ymrf7")
+region = Rect2(220, 0, 44, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iq4ay"]
 atlas = ExtResource("2_7r1wa")
@@ -74,10 +99,28 @@ region = Rect2(160, 0, 32, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6vevg"]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2xijm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_di5vw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydkaj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_phual")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o7swa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjaf5")
+}],
 "loop": true,
 "name": &"falling",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -213,17 +256,15 @@ texture_filter = 1
 script = ExtResource("1_6vevg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3, -2.5)
 scale = Vector2(10, 10)
 shape = SubResource("RectangleShape2D_ymrf7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(3, -1)
 sprite_frames = SubResource("SpriteFrames_6vevg")
-animation = &"walking"
+animation = &"falling"
 autoplay = "idle"
-frame_progress = 0.381277
+frame_progress = 0.721961
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
