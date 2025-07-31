@@ -1,7 +1,9 @@
 extends CharacterBody2D
 
-const SPEED = 15
-const JUMP_VELOCITY = -350
+
+@export var SPEED = 150
+@export var JUMP_VELOCITY = -300
+
 const GRAVITY = 900
 const JUMP_CUT_MULTIPLIER = 0.2
 const MAX_JUMPS = 2
