@@ -1,6 +1,6 @@
 [gd_scene load_steps=34 format=3 uid="uid://dxfbf4g57yf"]
 
-[ext_resource type="Script" uid="uid://xmnpretlwywl" path="res://Scenes/mobius.gd" id="1_6vevg"]
+[ext_resource type="Script" uid="uid://xmnpretlwywl" path="res://Scripts/mobius.gd" id="1_6vevg"]
 [ext_resource type="Texture2D" uid="uid://ruqcxkm1o10r" path="res://Scenes/Sprites/Mobius_Idle.png" id="2_7r1wa"]
 [ext_resource type="Texture2D" uid="uid://cxihkrhbltn3m" path="res://Scenes/Sprites/Mobius_Falling.png" id="2_ymrf7"]
 [ext_resource type="Texture2D" uid="uid://1t4oo047ad1u" path="res://Scenes/Sprites/Mobius_Run.png" id="3_emswm"]
