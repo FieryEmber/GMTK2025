@@ -2,8 +2,13 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< Updated upstream:project-loop/Sprites/icon.svg.import
 uid="uid://cf1kpulw7nrq2"
 path="res://.godot/imported/icon.svg-b67cfb692a937e61d2bda8561d9e8db7.ctex"
+=======
+uid="uid://di1syj2wlly6"
+path="res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex"
+>>>>>>> Stashed changes:project-loop/icon.svg.import
 metadata={
 "vram_texture": false
 }
