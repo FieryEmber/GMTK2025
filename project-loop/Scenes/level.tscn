@@ -157,12 +157,12 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_754fn")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_81xng"]
-radius = 41.1096
+radius = 52.0096
 
 [node name="Level" type="Node2D"]
 
 [node name="Mobius" parent="." instance=ExtResource("1_tumq0")]
-position = Vector2(-4, -37)
+position = Vector2(118, -8)
 
 [node name="StartDelayTimer" type="Timer" parent="Mobius"]
 wait_time = 5.0

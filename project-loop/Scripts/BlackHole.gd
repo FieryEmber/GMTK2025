@@ -8,6 +8,7 @@ class_name BlackHole
 
 var initial_scale: Vector2
 var initial_radius: float = 0.0
+var total_growth_factor: float = 1.0
 
 func _ready() -> void:
 	initial_scale = scale
@@ -17,28 +18,24 @@ func _ready() -> void:
 		initial_radius = shape_resource.radius
 
 func _process(delta: float) -> void:
-	scale_blackhole(growth_rate * delta)
+	var growth = 1.0 + (growth_rate * delta)
+	total_growth_factor *= growth
+	apply_growth()
 	
 func reset():
-	if visual_root:
-		visual_root.scale = initial_scale  # <- Fix: Reset visual scale
-
-	var shape_resource = collision_shape.shape
-	if shape_resource is CircleShape2D:
-		shape_resource.radius = initial_radius  # Replace with actual original size
+	total_growth_factor = 1.0
+	apply_growth()
 
 func grow():
 	print("Black hole grew!")
-	scale_blackhole(growth_rate)
+	total_growth_factor *= (1.0 + growth_rate)
+	apply_growth()
 
-func scale_blackhole(amount: float) -> void:
-	# Scale visuals
-	if visual_root:
-		visual_root.scale += Vector2.ONE * amount
-	
-	# Scale the collision shape
-	if collision_shape and collision_shape.shape:
-		var shape = collision_shape.shape
-		if shape is CircleShape2D:
-			shape.radius *= 1.0 + amount
-		
+func apply_growth():
+	# Scale visual sprite
+	visual_root.scale = initial_scale * total_growth_factor
+
+	# Scale collision shape radius
+	var shape = collision_shape.shape
+	if shape is CircleShape2D:
+		shape.radius = initial_radius * total_growth_factor
