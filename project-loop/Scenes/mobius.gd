@@ -9,6 +9,7 @@ const JUMP_CUT_MULTIPLIER = 0.2
 const MAX_JUMPS = 2
 
 @onready var anim = $AnimatedSprite2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var jump_count = 0
 
@@ -50,6 +51,7 @@ func _physics_process(delta):
 		jump_count = 0
 		if is_moving:
 			anim.play("walking")
+			animation_player.play("Run_skew")
 		else:
 			anim.play("idle")
 	else:
@@ -57,5 +59,6 @@ func _physics_process(delta):
 			anim.play("falling")
 		else:
 			anim.play("jump")
+			animation_player.play("Jump_skew")
 
 	move_and_slide()
