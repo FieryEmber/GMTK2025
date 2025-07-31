@@ -7,10 +7,11 @@ extends CharacterBody2D
 @onready var start_delaytimer = $StartDelayTimer
 @onready var game_loop_timer = $GameLoopTimer
 
-var game_time_remaining = 30
+var game_time_remaining = 24
 var countdown_started = false
 var delay_started = false
 var spawn_position = Vector2.ZERO
+var loop_started = false
 
 const GRAVITY = 900
 const JUMP_CUT_MULTIPLIER = 0.2
@@ -23,13 +24,11 @@ var jump_count = 0
 
 func _ready() -> void:
 	spawn_position = global_position
+	start_delaytimer.start()
+	delay_started = true
 
 func _physics_process(delta):
 	velocity.y += GRAVITY * delta
-	
-	if is_on_floor() and not delay_started and not countdown_started:
-		start_delaytimer.start()
-		delay_started = true
 
 	var is_moving = false
 	velocity.x = 0
@@ -56,10 +55,10 @@ func _physics_process(delta):
 	if velocity.y < 0 and Input.is_action_just_released("jump"):
 		velocity.y *= JUMP_CUT_MULTIPLIER
 		
-	# Teleport
-	#if Input.is_action_just_pressed("teleport"):
-		#self.position = get_global_mouse_position()
-		#self.velocity.y = 0
+	#Teleport
+	if Input.is_action_just_pressed("teleport"):
+		self.position = get_global_mouse_position()
+		self.velocity.y = 0
 
 	# Reset jump count when on floor
 	if is_on_floor():
@@ -81,16 +80,25 @@ func _physics_process(delta):
 
 func _on_game_loop_timer_timeout() -> void:
 	game_time_remaining -= 1;
+	print("Time remaining:", game_time_remaining)
 	
 	if game_time_remaining <= 0:
+		print("Resetting player!")
 		game_loop_timer.stop()
 		global_position = spawn_position
 		velocity = Vector2.ZERO
 		delay_started = false
 		countdown_started = false
+		loop_started = false
+		start_delaytimer.start()
 
 
 func _on_start_delay_timer_timeout() -> void:
+	if loop_started:
+		return
+		
+	print("StartDelayTimer fired!")
+	loop_started = true
 	game_time_remaining = 30
 	game_loop_timer.start()
 	countdown_started = true

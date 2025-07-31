@@ -164,7 +164,6 @@ position = Vector2(-4, -37)
 wait_time = 5.0
 
 [node name="GameLoopTimer" type="Timer" parent="Mobius"]
-wait_time = 5.0
 
 [node name="Tilemap" type="Node2D" parent="."]
 
