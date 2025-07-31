@@ -1,10 +1,10 @@
 [gd_scene load_steps=34 format=3 uid="uid://dxfbf4g57yf"]
 
 [ext_resource type="Script" uid="uid://xmnpretlwywl" path="res://Scenes/mobius.gd" id="1_6vevg"]
-[ext_resource type="Texture2D" uid="uid://ruqcxkm1o10r" path="res://Scenes/Sprites/Mobius_Idle.png" id="2_7r1wa"]
-[ext_resource type="Texture2D" uid="uid://cxihkrhbltn3m" path="res://Scenes/Sprites/Mobius_Falling.png" id="2_ymrf7"]
-[ext_resource type="Texture2D" uid="uid://1t4oo047ad1u" path="res://Scenes/Sprites/Mobius_Run.png" id="3_emswm"]
-[ext_resource type="Texture2D" uid="uid://cc3fnlair24kt" path="res://Scenes/Sprites/Mobius_Jump.png" id="3_ymrf7"]
+[ext_resource type="Texture2D" uid="uid://ruqcxkm1o10r" path="res://Scenes/Sprites/Mobius/Mobius_Idle.png" id="2_7r1wa"]
+[ext_resource type="Texture2D" uid="uid://cxihkrhbltn3m" path="res://Scenes/Sprites/Mobius/Mobius_Falling.png" id="2_ymrf7"]
+[ext_resource type="Texture2D" uid="uid://1t4oo047ad1u" path="res://Scenes/Sprites/Mobius/Mobius_Run.png" id="3_emswm"]
+[ext_resource type="Texture2D" uid="uid://cc3fnlair24kt" path="res://Scenes/Sprites/Mobius/Mobius_Jump.png" id="3_ymrf7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ymrf7"]
 size = Vector2(3, 6.7)
@@ -265,11 +265,6 @@ sprite_frames = SubResource("SpriteFrames_6vevg")
 animation = &"falling"
 autoplay = "idle"
 frame_progress = 0.590829
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
-position_smoothing_enabled = true
-position_smoothing_speed = 25.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

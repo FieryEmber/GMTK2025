@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=4 uid="uid://bvlxjotlrqpko"]
+[gd_scene load_steps=11 format=4 uid="uid://bvlxjotlrqpko"]
 
 [ext_resource type="PackedScene" uid="uid://dxfbf4g57yf" path="res://Scenes/mobius.tscn" id="1_tumq0"]
-[ext_resource type="Texture2D" uid="uid://bsodahfhrujyc" path="res://Scenes/Sprites/TempSprites.png" id="2_6phgx"]
+[ext_resource type="Texture2D" uid="uid://bsodahfhrujyc" path="res://Scenes/Sprites/Textures/TempSprites.png" id="2_6phgx"]
 [ext_resource type="PackedScene" uid="uid://cod6g8i54sqnc" path="res://Scenes/black_hole.tscn" id="3_6phgx"]
+[ext_resource type="Script" uid="uid://bx210d3mq4enm" path="res://Scenes/Camera_2d.gd" id="4_81xng"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_81xng"]
 texture = ExtResource("2_6phgx")
@@ -182,3 +183,9 @@ tile_set = SubResource("TileSet_bvt00")
 
 [node name="BlackHole" parent="Tilemap" instance=ExtResource("3_6phgx")]
 z_index = -4
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+position_smoothing_speed = 25.0
+script = ExtResource("4_81xng")
