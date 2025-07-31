@@ -1,0 +1,288 @@
+[gd_scene load_steps=28 format=3 uid="uid://cod6g8i54sqnc"]
+
+[ext_resource type="Texture2D" uid="uid://bxwvde7npkfw5" path="res://Scenes/Sprites/Blk1.png" id="1_cv587"]
+[ext_resource type="Texture2D" uid="uid://dngtum41j1oac" path="res://Scenes/Sprites/Blk2.png" id="2_wn18u"]
+[ext_resource type="Texture2D" uid="uid://d0hgj8ep5te3j" path="res://Scenes/Sprites/Blk3.png" id="3_ratl1"]
+[ext_resource type="Texture2D" uid="uid://giovu3h6lr0k" path="res://Scenes/Sprites/Particle.png" id="4_8ovth"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_md530"]
+atlas = ExtResource("1_cv587")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2hkqs"]
+atlas = ExtResource("1_cv587")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w38s7"]
+atlas = ExtResource("1_cv587")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j03be"]
+atlas = ExtResource("1_cv587")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ju0pb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_md530")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2hkqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w38s7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j03be")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydrdn"]
+atlas = ExtResource("2_wn18u")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qvnkr"]
+atlas = ExtResource("2_wn18u")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6528t"]
+atlas = ExtResource("2_wn18u")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8tb1"]
+atlas = ExtResource("2_wn18u")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rdexm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydrdn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qvnkr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6528t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8tb1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vv1pq"]
+atlas = ExtResource("3_ratl1")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhlxa"]
+atlas = ExtResource("3_ratl1")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_716ui"]
+atlas = ExtResource("3_ratl1")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oo2oj"]
+atlas = ExtResource("3_ratl1")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wn07g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vv1pq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhlxa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_716ui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oo2oj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_6tbdi"]
+resource_name = "BlackholeSpin"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BlackHoleBot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 3.14159]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BlackHoleBot:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, -0.5, 2),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BlackHoleMid:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -3.14159]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BlackHoleMid:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, -0.5, 2),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BlackHoleTop:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -3.14159]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BlackHoleTop:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, -0.5, 2),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7bm11"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BlackHoleBot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BlackHoleBot:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8ngfd"]
+_data = {
+&"BlackholeSpin": SubResource("Animation_6tbdi"),
+&"RESET": SubResource("Animation_7bm11")
+}
+
+[sub_resource type="Curve" id="Curve_cv587"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.590747, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_wn18u"]
+curve = SubResource("Curve_cv587")
+
+[sub_resource type="Curve" id="Curve_hx7ua"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.793594, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_lasnm"]
+curve = SubResource("Curve_hx7ua")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tjypq"]
+direction = Vector3(0, 5, 0)
+spread = 180.0
+initial_velocity_max = 100.0
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = -1.60933e-05
+orbit_velocity_min = -0.0379999
+orbit_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_lasnm")
+color = Color(0.688764, 0.586249, 0.736592, 1)
+alpha_curve = SubResource("CurveTexture_wn18u")
+
+[node name="BlackHole" type="Node2D"]
+
+[node name="BlackHoleTop" type="AnimatedSprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_ju0pb")
+autoplay = "default"
+frame_progress = 0.372571
+
+[node name="BlackHoleMid" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_rdexm")
+autoplay = "default"
+frame_progress = 0.363306
+
+[node name="BlackHoleBot" type="AnimatedSprite2D" parent="."]
+z_index = -1
+texture_filter = 1
+skew = -0.00265849
+sprite_frames = SubResource("SpriteFrames_wn07g")
+autoplay = "default"
+frame_progress = 0.247948
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_8ngfd")
+}
+autoplay = "BlackholeSpin"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+z_index = -1
+texture_filter = 1
+texture = ExtResource("4_8ovth")
+lifetime = 1.2
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_tjypq")
