@@ -1,3 +1,25 @@
-[gd_scene format=3 uid="uid://bvlxjotlrqpko"]
+[gd_scene load_steps=3 format=3 uid="uid://bvlxjotlrqpko"]
+
+[ext_resource type="PackedScene" uid="uid://dxfbf4g57yf" path="res://Scenes/mobius.tscn" id="1_tumq0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k5f4k"]
+size = Vector2(800, 49)
 
 [node name="Level" type="Node2D"]
+
+[node name="floor" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor"]
+position = Vector2(401, 622)
+shape = SubResource("RectangleShape2D_k5f4k")
+
+[node name="ColorRect" type="ColorRect" parent="floor"]
+custom_minimum_size = Vector2(800, 50)
+offset_left = 2.0
+offset_top = 598.0
+offset_right = 802.0
+offset_bottom = 648.0
+color = Color(1, 0.247059, 1, 1)
+
+[node name="Mobius" parent="." instance=ExtResource("1_tumq0")]
+position = Vector2(28, 532)
