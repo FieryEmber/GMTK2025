@@ -4,6 +4,13 @@ extends CharacterBody2D
 @export var SPEED = 180
 @export var JUMP_VELOCITY = -400
 
+@onready var start_delaytimer = $StartDelayTImer
+@onready var game_loop_timer = $GameLoopTimer
+
+var game_time_remaining = 30
+var countdown_started = false
+var delay_started = false
+
 const GRAVITY = 900
 const JUMP_CUT_MULTIPLIER = 0.2
 const MAX_JUMPS = 2
@@ -14,6 +21,10 @@ var jump_count = 0
 
 func _physics_process(delta):
 	velocity.y += GRAVITY * delta
+	
+	if is_on_floor() and not delay_started and not countdown_started:
+		start_delaytimer.start()
+		delay_started = true
 
 	var is_moving = false
 	velocity.x = 0
@@ -41,9 +52,9 @@ func _physics_process(delta):
 		velocity.y *= JUMP_CUT_MULTIPLIER
 		
 	# Teleport
-	if Input.is_action_just_pressed("teleport"):
-		self.position = get_global_mouse_position()
-		self.velocity.y = 0
+	#if Input.is_action_just_pressed("teleport"):
+		#self.position = get_global_mouse_position()
+		#self.velocity.y = 0
 
 	# Reset jump count when on floor
 	if is_on_floor():

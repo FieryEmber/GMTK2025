@@ -160,6 +160,12 @@ sources/0 = SubResource("TileSetAtlasSource_754fn")
 [node name="Mobius" parent="." instance=ExtResource("1_tumq0")]
 position = Vector2(-4, -37)
 
+[node name="StartDelayTImer" type="Timer" parent="Mobius"]
+wait_time = 5.0
+
+[node name="GameLoopTimer" type="Timer" parent="Mobius"]
+wait_time = 5.0
+
 [node name="Tilemap" type="Node2D" parent="."]
 
 [node name="1" type="TileMapLayer" parent="Tilemap"]
