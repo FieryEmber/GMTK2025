@@ -64,6 +64,7 @@ custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
+button_mask = 0
 icon = SubResource("AtlasTexture_oaw30")
 
 [node name="Teleport" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer"]
@@ -72,6 +73,7 @@ custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+button_mask = 0
 icon = SubResource("AtlasTexture_obik5")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
@@ -84,6 +86,7 @@ custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+button_mask = 0
 icon = SubResource("AtlasTexture_mj8uy")
 
 [node name="Down" type="Button" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
@@ -92,6 +95,7 @@ custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+button_mask = 0
 icon = SubResource("AtlasTexture_3rlp6")
 
 [node name="Right" type="Button" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
@@ -100,6 +104,7 @@ custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+button_mask = 0
 icon = SubResource("AtlasTexture_bw2rt")
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
