@@ -264,7 +264,7 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_6vevg")
 animation = &"falling"
 autoplay = "idle"
-frame_progress = 0.721961
+frame_progress = 0.590829
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
