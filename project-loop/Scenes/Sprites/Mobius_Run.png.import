@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxwvde7npkfw5"
-path="res://.godot/imported/Blk1.png-05e7cebe592ebf83121668d61d7e3d52.ctex"
+uid="uid://1t4oo047ad1u"
+path="res://.godot/imported/Mobius_Run.png-578168feebd91074c63c04a51df1ecf7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Sprites/Blk1.png"
-dest_files=["res://.godot/imported/Blk1.png-05e7cebe592ebf83121668d61d7e3d52.ctex"]
+source_file="res://Scenes/Sprites/Mobius_Run.png"
+dest_files=["res://.godot/imported/Mobius_Run.png-578168feebd91074c63c04a51df1ecf7.ctex"]
 
 [params]
 

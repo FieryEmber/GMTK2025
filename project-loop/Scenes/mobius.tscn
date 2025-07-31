@@ -1,11 +1,59 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxfbf4g57yf"]
+[gd_scene load_steps=18 format=3 uid="uid://dxfbf4g57yf"]
 
 [ext_resource type="Script" uid="uid://xmnpretlwywl" path="res://Scenes/mobius.gd" id="1_6vevg"]
-[ext_resource type="Texture2D" uid="uid://b082olw5sg7bv" path="res://idledown.png" id="2_cevr1"]
+[ext_resource type="Texture2D" uid="uid://ruqcxkm1o10r" path="res://Scenes/Sprites/Mobius_Idle.png" id="2_7r1wa"]
+[ext_resource type="Texture2D" uid="uid://1t4oo047ad1u" path="res://Scenes/Sprites/Mobius_Run.png" id="3_emswm"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j0fq2"]
-radius = 1.7
-height = 3.6
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ymrf7"]
+size = Vector2(3, 6.7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iq4ay"]
+atlas = ExtResource("2_7r1wa")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7xr7"]
+atlas = ExtResource("2_7r1wa")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0j6l"]
+atlas = ExtResource("2_7r1wa")
+region = Rect2(64, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcqqx"]
+atlas = ExtResource("2_7r1wa")
+region = Rect2(96, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l56s1"]
+atlas = ExtResource("2_7r1wa")
+region = Rect2(128, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eswnc"]
+atlas = ExtResource("2_7r1wa")
+region = Rect2(160, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adl1v"]
+atlas = ExtResource("3_emswm")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15a6w"]
+atlas = ExtResource("3_emswm")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g702c"]
+atlas = ExtResource("3_emswm")
+region = Rect2(64, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60cqq"]
+atlas = ExtResource("3_emswm")
+region = Rect2(96, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixegm"]
+atlas = ExtResource("3_emswm")
+region = Rect2(128, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8gxwr"]
+atlas = ExtResource("3_emswm")
+region = Rect2(160, 0, 32, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6vevg"]
 animations = [{
@@ -16,7 +64,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_cevr1")
+"texture": SubResource("AtlasTexture_iq4ay")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7xr7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0j6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fcqqx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l56s1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eswnc")
 }],
 "loop": true,
 "name": &"idle",
@@ -27,23 +90,47 @@ animations = [{
 "name": &"jump",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adl1v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15a6w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g702c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60cqq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixegm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8gxwr")
+}],
 "loop": true,
 "name": &"walking",
-"speed": 5.0
+"speed": 9.0
 }]
 
 [node name="Mobius" type="CharacterBody2D"]
-position = Vector2(61, 481)
+texture_filter = 1
 script = ExtResource("1_6vevg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 4.76837e-07)
+position = Vector2(3, -2.5)
 scale = Vector2(10, 10)
-shape = SubResource("CapsuleShape2D_j0fq2")
+shape = SubResource("RectangleShape2D_ymrf7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(3, -1)
 sprite_frames = SubResource("SpriteFrames_6vevg")
-animation = &"idle"
+animation = &"walking"
 autoplay = "idle"
+frame_progress = 0.701116
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+position_smoothing_speed = 25.0
