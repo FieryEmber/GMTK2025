@@ -1,0 +1,15 @@
+[gd_scene load_steps=0 format=3 uid="uid://d3hmg2imsma6g"]
+
+[node name="HUD" type="Node2D"]
+
+[node name="W_Key" type="Node2D" parent="."]
+
+[node name="A_Key" type="Node2D" parent="."]
+
+[node name="S_Key" type="Node2D" parent="."]
+
+[node name="Dash" type="Node2D" parent="."]
+
+[node name="D_Key" type="Node2D" parent="."]
+
+[node name="Node2D" type="Node2D" parent="."]
