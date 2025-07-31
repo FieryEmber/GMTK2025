@@ -1,6 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxfbf4g57yf"]
+[gd_scene load_steps=5 format=3 uid="uid://dxfbf4g57yf"]
+
+[ext_resource type="Script" uid="uid://xmnpretlwywl" path="res://Scenes/mobius.gd" id="1_6vevg"]
+[ext_resource type="Texture2D" uid="uid://b082olw5sg7bv" path="res://idledown.png" id="2_cevr1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j0fq2"]
+radius = 1.7
+height = 3.6
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6vevg"]
 animations = [{
@@ -9,7 +14,10 @@ animations = [{
 "name": &"falling",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cevr1")
+}],
 "loop": true,
 "name": &"idle",
 "speed": 5.0
@@ -26,12 +34,16 @@ animations = [{
 }]
 
 [node name="Mobius" type="CharacterBody2D"]
+position = Vector2(61, 481)
+script = ExtResource("1_6vevg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 4.76837e-07)
 scale = Vector2(10, 10)
 shape = SubResource("CapsuleShape2D_j0fq2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(3, -1)
 sprite_frames = SubResource("SpriteFrames_6vevg")
 animation = &"idle"
 autoplay = "idle"
