@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=4 uid="uid://bvlxjotlrqpko"]
 
 [ext_resource type="PackedScene" uid="uid://dxfbf4g57yf" path="res://Scenes/mobius.tscn" id="1_tumq0"]
-[ext_resource type="Texture2D" uid="uid://bsodahfhrujyc" path="res://Scenes/Sprites/TempTileset.png" id="2_6phgx"]
+[ext_resource type="Texture2D" uid="uid://bsodahfhrujyc" path="res://Scenes/Sprites/TempSprites.png" id="2_6phgx"]
 [ext_resource type="PackedScene" uid="uid://baclnmroevusg" path="res://Scenes/black_hole.tscn" id="3_6phgx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_81xng"]
