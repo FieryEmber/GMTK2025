@@ -1,9 +1,9 @@
 [gd_scene load_steps=28 format=3 uid="uid://baclnmroevusg"]
 
-[ext_resource type="Texture2D" uid="uid://cdwbawvb4fify" path="res://Scenes/Sprites/Blk1.png" id="1_cv587"]
-[ext_resource type="Texture2D" uid="uid://4kx0g0uy4sky" path="res://Scenes/Sprites/Blk2new.png" id="2_wn18u"]
-[ext_resource type="Texture2D" uid="uid://16ysk7hpkyau" path="res://Scenes/Sprites/Blk3.png" id="3_ratl1"]
-[ext_resource type="Texture2D" uid="uid://c7u52fx3ehfst" path="res://Scenes/Sprites/Blood-export.png" id="4_8ovth"]
+[ext_resource type="Texture2D" uid="uid://bxwvde7npkfw5" path="res://Scenes/Sprites/Blk1.png" id="1_cv587"]
+[ext_resource type="Texture2D" uid="uid://dngtum41j1oac" path="res://Scenes/Sprites/Blk2.png" id="2_wn18u"]
+[ext_resource type="Texture2D" uid="uid://d0hgj8ep5te3j" path="res://Scenes/Sprites/Blk3.png" id="3_ratl1"]
+[ext_resource type="Texture2D" uid="uid://giovu3h6lr0k" path="res://Scenes/Sprites/Particle.png" id="4_8ovth"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_md530"]
 atlas = ExtResource("1_cv587")
