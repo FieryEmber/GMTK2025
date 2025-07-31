@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dxfbf4g57yf" path="res://Scenes/mobius.tscn" id="1_tumq0"]
 [ext_resource type="Texture2D" uid="uid://bsodahfhrujyc" path="res://Scenes/Sprites/TempSprites.png" id="2_6phgx"]
-[ext_resource type="PackedScene" uid="uid://baclnmroevusg" path="res://Scenes/black_hole.tscn" id="3_6phgx"]
+[ext_resource type="PackedScene" uid="uid://cod6g8i54sqnc" path="res://Scenes/black_hole.tscn" id="3_6phgx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_81xng"]
 texture = ExtResource("2_6phgx")
@@ -159,8 +159,6 @@ sources/0 = SubResource("TileSetAtlasSource_754fn")
 
 [node name="Mobius" parent="." instance=ExtResource("1_tumq0")]
 position = Vector2(-4, -37)
-SPEED = 180
-JUMP_VELOCITY = -400
 
 [node name="Tilemap" type="Node2D" parent="."]
 
