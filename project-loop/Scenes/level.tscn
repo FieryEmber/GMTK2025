@@ -189,5 +189,5 @@ tile_set = SubResource("TileSet_bvt00")
 [node name="BlackHole" parent="Tilemap" instance=ExtResource("3_6phgx")]
 z_index = -4
 
-[connection signal="timeout" from="Mobius/StartDelayTimer" to="Mobius" method="_on_start_delay_t_imer_timeout"]
+[connection signal="timeout" from="Mobius/StartDelayTimer" to="Mobius" method="_on_start_delay_timer_timeout"]
 [connection signal="timeout" from="Mobius/GameLoopTimer" to="Mobius" method="_on_game_loop_timer_timeout"]

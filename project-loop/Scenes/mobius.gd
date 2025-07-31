@@ -79,12 +79,6 @@ func _physics_process(delta):
 	move_and_slide()
 
 
-func _on_start_delay_t_imer_timeout() -> void:
-	game_time_remaining = 30
-	game_loop_timer.start()
-	countdown_started = true
-
-
 func _on_game_loop_timer_timeout() -> void:
 	game_time_remaining -= 1;
 	
@@ -94,3 +88,9 @@ func _on_game_loop_timer_timeout() -> void:
 		velocity = Vector2.ZERO
 		delay_started = false
 		countdown_started = false
+
+
+func _on_start_delay_timer_timeout() -> void:
+	game_time_remaining = 30
+	game_loop_timer.start()
+	countdown_started = true
