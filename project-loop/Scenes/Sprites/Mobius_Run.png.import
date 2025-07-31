@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b082olw5sg7bv"
-path="res://.godot/imported/idledown.png-3871952c1842ce4685905736550d987b.ctex"
+uid="uid://1t4oo047ad1u"
+path="res://.godot/imported/Mobius_Run.png-578168feebd91074c63c04a51df1ecf7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://idledown.png"
-dest_files=["res://.godot/imported/idledown.png-3871952c1842ce4685905736550d987b.ctex"]
+source_file="res://Scenes/Sprites/Mobius_Run.png"
+dest_files=["res://.godot/imported/Mobius_Run.png-578168feebd91074c63c04a51df1ecf7.ctex"]
 
 [params]
 
