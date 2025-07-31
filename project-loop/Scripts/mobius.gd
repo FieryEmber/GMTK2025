@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-
 @export var SPEED = 180
 @export var JUMP_VELOCITY = -400
 
@@ -19,6 +18,7 @@ const MAX_JUMPS = 2
 
 @onready var anim = $AnimatedSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var black_hole := $"../Tilemap/Area2D" as BlackHole
 
 var jump_count = 0
 
@@ -90,15 +90,26 @@ func _on_game_loop_timer_timeout() -> void:
 		delay_started = false
 		countdown_started = false
 		loop_started = false
+		black_hole.reset()
 		start_delaytimer.start()
 
 
 func _on_start_delay_timer_timeout() -> void:
 	if loop_started:
 		return
+	
+	black_hole.grow()
 		
 	print("StartDelayTimer fired!")
 	loop_started = true
 	game_time_remaining = 30
 	game_loop_timer.start()
 	countdown_started = true
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body == self:
+		print("Player hit the black hole!")
+		global_position = spawn_position
+		velocity = Vector2.ZERO
+		black_hole.reset()
