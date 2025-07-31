@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://dxfbf4g57yf"]
+[gd_scene load_steps=23 format=3 uid="uid://dxfbf4g57yf"]
 
 [ext_resource type="Script" uid="uid://xmnpretlwywl" path="res://Scenes/mobius.gd" id="1_6vevg"]
 [ext_resource type="Texture2D" uid="uid://ruqcxkm1o10r" path="res://Scenes/Sprites/Mobius_Idle.png" id="2_7r1wa"]
 [ext_resource type="Texture2D" uid="uid://1t4oo047ad1u" path="res://Scenes/Sprites/Mobius_Run.png" id="3_emswm"]
+[ext_resource type="Texture2D" uid="uid://cc3fnlair24kt" path="res://Scenes/Sprites/Mobius_Jump.png" id="3_ymrf7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ymrf7"]
 size = Vector2(3, 6.7)
@@ -30,6 +31,22 @@ region = Rect2(128, 0, 32, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_eswnc"]
 atlas = ExtResource("2_7r1wa")
 region = Rect2(160, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emswm"]
+atlas = ExtResource("3_ymrf7")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymrf7"]
+atlas = ExtResource("3_ymrf7")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0a30"]
+atlas = ExtResource("3_ymrf7")
+region = Rect2(64, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7njj"]
+atlas = ExtResource("3_ymrf7")
+region = Rect2(96, 0, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_adl1v"]
 atlas = ExtResource("3_emswm")
@@ -85,10 +102,22 @@ animations = [{
 "name": &"idle",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emswm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ymrf7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j0a30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7njj")
+}],
 "loop": true,
 "name": &"jump",
-"speed": 5.0
+"speed": 4.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -124,11 +153,11 @@ scale = Vector2(10, 10)
 shape = SubResource("RectangleShape2D_ymrf7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 position = Vector2(3, -1)
 sprite_frames = SubResource("SpriteFrames_6vevg")
-animation = &"walking"
+animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.701116
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
