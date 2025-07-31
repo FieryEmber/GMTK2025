@@ -4,12 +4,13 @@ extends CharacterBody2D
 @export var SPEED = 180
 @export var JUMP_VELOCITY = -400
 
-@onready var start_delaytimer = $StartDelayTImer
+@onready var start_delaytimer = $StartDelayTimer
 @onready var game_loop_timer = $GameLoopTimer
 
 var game_time_remaining = 30
 var countdown_started = false
 var delay_started = false
+var spawn_position = Vector2.ZERO
 
 const GRAVITY = 900
 const JUMP_CUT_MULTIPLIER = 0.2
@@ -19,6 +20,9 @@ const MAX_JUMPS = 2
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var jump_count = 0
+
+func _ready() -> void:
+	spawn_position = global_position
 
 func _physics_process(delta):
 	velocity.y += GRAVITY * delta
@@ -73,3 +77,20 @@ func _physics_process(delta):
 			animation_player.play("Jump_skew")
 
 	move_and_slide()
+
+
+func _on_start_delay_t_imer_timeout() -> void:
+	game_time_remaining = 30
+	game_loop_timer.start()
+	countdown_started = true
+
+
+func _on_game_loop_timer_timeout() -> void:
+	game_time_remaining -= 1;
+	
+	if game_time_remaining <= 0:
+		game_loop_timer.stop()
+		global_position = spawn_position
+		velocity = Vector2.ZERO
+		delay_started = false
+		countdown_started = false
