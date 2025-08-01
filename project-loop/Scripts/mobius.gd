@@ -88,8 +88,7 @@ func _physics_process(delta):
 		
 	if started_input and not black_hole_active:
 		black_hole_active = true
-		var rate = get_dynamic_growth_rate()
-		black_hole.start_growing(rate)
+		black_hole.start_growing(get_dynamic_growth_rate())
 
 	# Reset jump count when on floor
 	if is_on_floor():
@@ -116,12 +115,12 @@ func unlock_from_piece(piece: HelmetPiece) -> void:
 	if piece.unlock_jump:
 		can_jump = true
 	if piece.unlock_double_jump:
-		can_jump = true
+		can_double_jump = true
 	if piece.unlock_teleport:
 		can_teleport = true
 		
 func get_dynamic_growth_rate() -> float:
-	var base_rate = 0.20
+	var base_rate = 0.60
 	
 	if can_move_left:
 		base_rate -= 0.05

@@ -798,7 +798,7 @@ unlock_move_down = true
 texture = ExtResource("9_oqgf2")
 
 [node name="HelmetPiece3" parent="." instance=ExtResource("7_8c0lf")]
-position = Vector2(-982, -590)
+position = Vector2(-2301, 1084)
 unlock_jump = true
 
 [connection signal="body_entered" from="Tilemap/Area2D" to="Mobius" method="_on_area_2d_body_entered"]
