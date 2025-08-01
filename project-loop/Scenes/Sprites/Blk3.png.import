@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxwvde7npkfw5"
-path="res://.godot/imported/Blk1.png-87fded29b5871b8f7e97e0c703a42af8.ctex"
+uid="uid://d0hgj8ep5te3j"
+path="res://.godot/imported/Blk3.png-4e1cff95b3e294e63ee1f15f0e14eae2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Sprites/Textures/Blk1.png"
-dest_files=["res://.godot/imported/Blk1.png-87fded29b5871b8f7e97e0c703a42af8.ctex"]
+source_file="res://Scenes/Sprites/Blk3.png"
+dest_files=["res://.godot/imported/Blk3.png-4e1cff95b3e294e63ee1f15f0e14eae2.ctex"]
 
 [params]
 

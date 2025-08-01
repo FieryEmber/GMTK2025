@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dngtum41j1oac"
-path="res://.godot/imported/Blk2.png-b9535e29f1faa39a3d0228462a3d40b4.ctex"
+uid="uid://ruqcxkm1o10r"
+path="res://.godot/imported/Mobius_Idle.png-174a1ca9f91982104ffe17a3f41ad051.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Sprites/Textures/Blk2.png"
-dest_files=["res://.godot/imported/Blk2.png-b9535e29f1faa39a3d0228462a3d40b4.ctex"]
+source_file="res://Scenes/Sprites/Mobius_Idle.png"
+dest_files=["res://.godot/imported/Mobius_Idle.png-174a1ca9f91982104ffe17a3f41ad051.ctex"]
 
 [params]
 

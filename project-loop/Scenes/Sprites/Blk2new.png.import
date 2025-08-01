@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cc3fnlair24kt"
-path="res://.godot/imported/Mobius_Jump.png-7099b8cb2d57d49c1778695526c91724.ctex"
+uid="uid://4kx0g0uy4sky"
+path="res://.godot/imported/Blk2new.png-8d88a839ad51dcb5172d885c739aca03.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Sprites/Mobius/Mobius_Jump.png"
-dest_files=["res://.godot/imported/Mobius_Jump.png-7099b8cb2d57d49c1778695526c91724.ctex"]
+source_file="res://Scenes/Sprites/Blk2new.png"
+dest_files=["res://.godot/imported/Blk2new.png-8d88a839ad51dcb5172d885c739aca03.ctex"]
 
 [params]
 
