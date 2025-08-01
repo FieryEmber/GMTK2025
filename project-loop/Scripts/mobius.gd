@@ -6,7 +6,7 @@ extends CharacterBody2D
 @onready var start_delaytimer = $StartDelayTimer
 @onready var game_loop_timer = $GameLoopTimer
 
-var game_time_remaining = 24
+var game_time_remaining = 200
 var countdown_started = false
 var delay_started = false
 var spawn_position = Vector2.ZERO
@@ -102,7 +102,7 @@ func _on_start_delay_timer_timeout() -> void:
 		
 	print("StartDelayTimer fired!")
 	loop_started = true
-	game_time_remaining = 30
+	game_time_remaining = 200
 	game_loop_timer.start()
 	countdown_started = true
 
