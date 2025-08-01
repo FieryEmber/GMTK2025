@@ -25,6 +25,8 @@ func _process(delta: float) -> void:
 	apply_growth()
 	
 func start_growing(rate: float) -> void:
+	if active:
+		return
 	growth_rate = rate
 	active = true
 	

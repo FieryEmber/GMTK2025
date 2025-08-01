@@ -786,13 +786,11 @@ unlock_left = true
 
 [node name="HelmetPiece2" parent="." instance=ExtResource("7_8c0lf")]
 position = Vector2(-2033, 883)
-unlock_jump = true
+unlock_move_down = true
 
 [node name="HelmetPiece3" parent="." instance=ExtResource("7_8c0lf")]
-position = Vector2(-982, -590)
-unlock_move_down = true
+position = Vector2(-2301, 1084)
 unlock_jump = true
-unlock_double_jump = true
 
 [connection signal="body_entered" from="Tilemap/Area2D" to="Mobius" method="_on_area_2d_body_entered"]
 [connection signal="piece_collected" from="HelmetPiece" to="Mobius" method="_on_helmet_piece_piece_collected"]
