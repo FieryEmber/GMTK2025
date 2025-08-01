@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://5wpvu6bihcof" path="res://Scenes/Sprites/Textures/Tileset2.png" id="3_81xng"]
 [ext_resource type="Script" uid="uid://52pdodt7tt8q" path="res://Scripts/BlackHole.gd" id="4_81xng"]
 [ext_resource type="PackedScene" uid="uid://dxmmor12a0b6k" path="res://Scenes/game_ui.tscn" id="5_wqkje"]
-[ext_resource type="PackedScene" uid="uid://cnyq1nlvmdf36" path="res://Scenes/helmet_piece.tscn" id="7_8c0lf"]
+[ext_resource type="PackedScene" uid="uid://yovpi1m0dxfq" path="res://Scenes/helmet_piece.tscn" id="7_8c0lf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_81xng"]
 texture = ExtResource("2_6phgx")
@@ -781,7 +781,7 @@ grow_vertical = 2
 layout_mode = 1
 
 [node name="HelmetPiece" parent="." instance=ExtResource("7_8c0lf")]
-position = Vector2(1867, 399)
+position = Vector2(1821, 370)
 unlock_left = true
 
 [connection signal="timeout" from="Mobius/StartDelayTimer" to="Mobius" method="_on_start_delay_timer_timeout"]
