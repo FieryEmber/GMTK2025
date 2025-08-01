@@ -1,0 +1,145 @@
+[gd_scene load_steps=8 format=3 uid="uid://bnpre57aaiihv"]
+
+[ext_resource type="Script" path="res://Scripts/game_ui.gd" id="1_bw2rt"]
+[ext_resource type="Texture2D" path="res://Scenes/Sprites/Textures/Buttons.png" id="1_gek4i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oaw30"]
+atlas = ExtResource("1_gek4i")
+region = Rect2(0, 0, 70, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_obik5"]
+atlas = ExtResource("1_gek4i")
+region = Rect2(280, 0, 70, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mj8uy"]
+atlas = ExtResource("1_gek4i")
+region = Rect2(140, 0, 70, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3rlp6"]
+atlas = ExtResource("1_gek4i")
+region = Rect2(210, 0, 70, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bw2rt"]
+atlas = ExtResource("1_gek4i")
+region = Rect2(70, 0, 70, 70)
+
+[node name="inGameUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bw2rt")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+
+[node name="Up" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+button_mask = 0
+icon = SubResource("AtlasTexture_oaw30")
+
+[node name="Teleport" type="Button" parent="MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+button_mask = 0
+icon = SubResource("AtlasTexture_obik5")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
+texture_filter = 1
+layout_mode = 2
+
+[node name="Left" type="Button" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+button_mask = 0
+icon = SubResource("AtlasTexture_mj8uy")
+
+[node name="Down" type="Button" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+button_mask = 0
+icon = SubResource("AtlasTexture_3rlp6")
+
+[node name="Right" type="Button" parent="MarginContainer/VBoxContainer2/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+button_mask = 0
+icon = SubResource("AtlasTexture_bw2rt")
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(160, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="Timer" type="RichTextLabel" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_force_pass_scroll_events = false
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[shake]60.00"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 25)
+layout_mode = 2
+size_flags_vertical = 2
+show_percentage = false
