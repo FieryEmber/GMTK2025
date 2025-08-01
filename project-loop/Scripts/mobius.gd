@@ -11,9 +11,10 @@ var spawn_position = Vector2.ZERO
 var spawn_position_2 = Vector2(-100, 0)
 var spawn_checkpoint = 0
 var loop_started = false
-var black_hole_active = false
+var black_hole_active = true
 
 # Mobius allowed movement
+
 #region AbilityChecks
 @export var can_move_right = true
 @export var can_move_left = false
@@ -23,6 +24,7 @@ var black_hole_active = false
 @export var can_teleport = false
 @export var started_input = false
 #endregion
+
 const GRAVITY = 900
 const JUMP_CUT_MULTIPLIER = 0.2
 const MAX_JUMPS = 2
@@ -37,6 +39,7 @@ func _ready() -> void:
 	spawn_position = global_position
 
 func _physics_process(delta):
+	
 	velocity.y += GRAVITY * delta
 	var is_moving = false
 	velocity.x = 0
