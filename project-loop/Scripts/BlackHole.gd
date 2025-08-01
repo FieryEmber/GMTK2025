@@ -1,7 +1,7 @@
 extends Area2D
 class_name BlackHole
 
-@export var growth_rate: float = 0.50
+@export var growth_rate: float = 0.20
 
 @onready var visual_root: Node2D = $BlackHole
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -11,7 +11,7 @@ var initial_radius: float = 0.0
 var total_growth_factor: float = 1.0
 
 func _ready() -> void:
-	initial_scale = scale
+	initial_scale = visual_root.scale
 	
 	var shape_resource = collision_shape.shape
 	if shape_resource is CircleShape2D:
@@ -27,7 +27,7 @@ func reset():
 	apply_growth()
 
 func grow():
-	print("Black hole grew!")
+	
 	total_growth_factor *= (1.0 + growth_rate)
 	apply_growth()
 
