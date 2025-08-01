@@ -3,6 +3,7 @@ extends Area2D
 class_name HelmetPiece
 
 @export var unlock_left: bool = false
+@export var unlock_move_down = false
 @export var unlock_jump: bool = false
 @export var unlock_double_jump: bool = false
 @export var unlock_teleport: bool = false
