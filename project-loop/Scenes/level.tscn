@@ -720,6 +720,7 @@ radius = 52.0096
 [node name="Music" parent="." instance=ExtResource("1_8c0lf")]
 stream = ExtResource("7_8c0lf")
 volume_db = -11.0
+autoplay = false
 
 [node name="Mobius" parent="." instance=ExtResource("1_tumq0")]
 position = Vector2(156, -17)

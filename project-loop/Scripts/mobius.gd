@@ -27,6 +27,7 @@ const MAX_JUMPS = 2
 @onready var anim = $AnimatedSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var black_hole := $"../Tilemap/Area2D" as BlackHole
+@onready var music = $"../Music"
 
 var jump_count = 0
 
@@ -34,6 +35,7 @@ func _ready() -> void:
 	spawn_position = global_position
 	start_delaytimer.start()
 	delay_started = true
+	music.play()
 
 func _physics_process(delta):
 	velocity.y += GRAVITY * delta
