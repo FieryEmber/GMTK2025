@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
-@export var SPEED = 180
+class_name Mobius
+
+@export var SPEED = 190
 @export var JUMP_VELOCITY = -400
 
 @onready var start_delaytimer = $StartDelayTimer
@@ -10,6 +12,7 @@ var game_time_remaining = 24
 var countdown_started = false
 var delay_started = false
 var spawn_position = Vector2.ZERO
+var spawn_position_2 = Vector2(-100, 0)
 var loop_started = false
 
 # Mobius allowed movement
@@ -69,7 +72,7 @@ func _physics_process(delta):
 		velocity.y *= JUMP_CUT_MULTIPLIER
 		
 	#Teleport
-	if Input.is_action_just_pressed("teleport"):
+	if Input.is_action_just_pressed("teleport") and can_teleport:
 		self.position = get_global_mouse_position()
 		self.velocity.y = 0
 
@@ -90,13 +93,20 @@ func _physics_process(delta):
 
 	move_and_slide()
 
+func unlock_from_piece(piece: HelmetPiece) -> void:
+	if piece.unlock_left:
+		can_move_left = true
+	if piece.unlock_jump:
+		can_jump = true;
+	if piece.unlock_double_jump:
+		can_double_jump = true
+	if piece.unlock_teleport:
+		can_teleport = true
 
 func _on_game_loop_timer_timeout() -> void:
 	game_time_remaining -= 1;
-	print("Time remaining:", game_time_remaining)
 	
 	if game_time_remaining <= 0:
-		print("Resetting player!")
 		game_loop_timer.stop()
 		global_position = spawn_position
 		velocity = Vector2.ZERO
@@ -113,16 +123,25 @@ func _on_start_delay_timer_timeout() -> void:
 	
 	black_hole.grow()
 		
-	print("StartDelayTimer fired!")
 	loop_started = true
 	game_time_remaining = 30
 	game_loop_timer.start()
 	countdown_started = true
 
+func reset_player_position() -> void:
+	if can_move_left or can_jump or can_double_jump:
+		global_position = spawn_position_2
+	elif can_move_right or can_teleport:
+		global_position = spawn_position
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body == self:
-		print("Player hit the black hole!")
-		global_position = spawn_position
+		reset_player_position()
 		velocity = Vector2.ZERO
 		black_hole.reset()
+		black_hole.growth_rate = 0.20
+
+
+func _on_helmet_piece_piece_collected(piece: HelmetPiece) -> void:
+	unlock_from_piece(piece)
+	black_hole.growth_rate = 0.60
