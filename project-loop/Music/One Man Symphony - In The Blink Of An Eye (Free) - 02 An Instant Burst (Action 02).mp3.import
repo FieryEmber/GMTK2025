@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dv0m2fblxlb8f"
+path="res://.godot/imported/One Man Symphony - In The Blink Of An Eye (Free) - 02 An Instant Burst (Action 02).mp3-a7df2c485d9a4cf519983a4ec7826099.mp3str"
+
+[deps]
+
+source_file="res://Music/One Man Symphony - In The Blink Of An Eye (Free) - 02 An Instant Burst (Action 02).mp3"
+dest_files=["res://.godot/imported/One Man Symphony - In The Blink Of An Eye (Free) - 02 An Instant Burst (Action 02).mp3-a7df2c485d9a4cf519983a4ec7826099.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

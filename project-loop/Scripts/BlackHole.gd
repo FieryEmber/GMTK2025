@@ -1,7 +1,7 @@
 extends Area2D
 class_name BlackHole
 
-@export var growth_rate: float = 0.50
+@export var growth_rate: float = 0.10
 
 @onready var visual_root: Node2D = $BlackHole
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
