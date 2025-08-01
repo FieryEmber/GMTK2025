@@ -785,7 +785,7 @@ position = Vector2(1821, 370)
 unlock_left = true
 
 [node name="HelmetPiece2" parent="." instance=ExtResource("7_8c0lf")]
-position = Vector2(-2033, 883)
+position = Vector2(-2081, 857)
 unlock_move_down = true
 
 [node name="HelmetPiece3" parent="." instance=ExtResource("7_8c0lf")]
