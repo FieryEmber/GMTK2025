@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cc3fnlair24kt"
-path="res://.godot/imported/Mobius_Jump.png-5f7e9bcfea274c2304d4f7d20be241f3.ctex"
+uid="uid://s44k0s0v4ptt"
+path="res://.godot/imported/Buttons.png-2769e9e5a4c40b03cac721af9cb28b34.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Sprites/Mobius_Jump.png"
-dest_files=["res://.godot/imported/Mobius_Jump.png-5f7e9bcfea274c2304d4f7d20be241f3.ctex"]
+source_file="res://Scenes/Sprites/Textures/Buttons.png"
+dest_files=["res://.godot/imported/Buttons.png-2769e9e5a4c40b03cac721af9cb28b34.ctex"]
 
 [params]
 
