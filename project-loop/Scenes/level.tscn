@@ -378,6 +378,20 @@ z_index = -4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tilemap/Area2D"]
 shape = SubResource("CircleShape2D_81xng")
 
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="TimerLabel" type="RichTextLabel" parent="HUD"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -168.5
+offset_top = 25.0
+offset_right = 168.5
+offset_bottom = 88.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 33
+text = "Time Remaining: X"
+
 [connection signal="timeout" from="Mobius/StartDelayTimer" to="Mobius" method="_on_start_delay_timer_timeout"]
 [connection signal="timeout" from="Mobius/GameLoopTimer" to="Mobius" method="_on_game_loop_timer_timeout"]
 [connection signal="body_entered" from="Tilemap/Area2D" to="Mobius" method="_on_area_2d_body_entered"]
