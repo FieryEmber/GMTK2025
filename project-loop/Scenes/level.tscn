@@ -723,12 +723,6 @@ radius = 52.0096
 [node name="Mobius" parent="." instance=ExtResource("1_tumq0")]
 position = Vector2(-730, 107)
 collision_mask = 3
-can_move_left = true
-can_move_down = true
-can_jump = true
-can_double_jump = true
-can_teleport = true
-started_input = true
 
 [node name="Tilemap" type="Node2D" parent="."]
 
