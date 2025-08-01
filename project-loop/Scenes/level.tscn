@@ -725,11 +725,6 @@ can_jump = true
 can_double_jump = true
 can_teleport = true
 
-[node name="StartDelayTimer" type="Timer" parent="Mobius"]
-wait_time = 5.0
-
-[node name="GameLoopTimer" type="Timer" parent="Mobius"]
-
 [node name="Tilemap" type="Node2D" parent="."]
 
 [node name="1" type="TileMapLayer" parent="Tilemap"]
@@ -763,11 +758,10 @@ tile_map_data = PackedByteArray("AAD2/wAAAgABAAMAAAD2/wEAAgABAAMAAAD2/wIAAAAIAAE
 tile_set = SubResource("TileSet_bvt00")
 
 [node name="Area2D" type="Area2D" parent="Tilemap"]
-z_index = 1
 script = ExtResource("4_81xng")
 
 [node name="BlackHole" parent="Tilemap/Area2D" instance=ExtResource("3_6phgx")]
-z_index = -4
+z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tilemap/Area2D"]
 shape = SubResource("CircleShape2D_81xng")
@@ -775,6 +769,7 @@ shape = SubResource("CircleShape2D_81xng")
 [node name="UiCanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Uiholder" type="Control" parent="UiCanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -789,7 +784,15 @@ layout_mode = 1
 position = Vector2(1821, 370)
 unlock_left = true
 
-[connection signal="timeout" from="Mobius/StartDelayTimer" to="Mobius" method="_on_start_delay_timer_timeout"]
-[connection signal="timeout" from="Mobius/GameLoopTimer" to="Mobius" method="_on_game_loop_timer_timeout"]
+[node name="HelmetPiece2" parent="." instance=ExtResource("7_8c0lf")]
+position = Vector2(-2033, 883)
+unlock_move_down = true
+
+[node name="HelmetPiece3" parent="." instance=ExtResource("7_8c0lf")]
+position = Vector2(-982, -590)
+unlock_jump = true
+
 [connection signal="body_entered" from="Tilemap/Area2D" to="Mobius" method="_on_area_2d_body_entered"]
 [connection signal="piece_collected" from="HelmetPiece" to="Mobius" method="_on_helmet_piece_piece_collected"]
+[connection signal="piece_collected" from="HelmetPiece2" to="Mobius" method="_on_helmet_piece_2_piece_collected"]
+[connection signal="piece_collected" from="HelmetPiece3" to="Mobius" method="_on_helmet_piece_3_piece_collected"]
