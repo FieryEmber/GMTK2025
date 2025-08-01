@@ -15,6 +15,7 @@ var loop_started = false
 # Mobius allowed movement
 var can_move_right = true
 var can_move_left = false
+var can_move_down = false
 var can_jump = false 
 var can_double_jump = false
 var can_teleport = false
