@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bsodahfhrujyc" path="res://Scenes/Sprites/Textures/TempSprites.png" id="2_6phgx"]
 [ext_resource type="PackedScene" uid="uid://cod6g8i54sqnc" path="res://Scenes/black_hole.tscn" id="3_6phgx"]
 [ext_resource type="Texture2D" uid="uid://5wpvu6bihcof" path="res://Scenes/Sprites/Textures/Tileset2.png" id="3_81xng"]
-[ext_resource type="Script" path="res://Scripts/BlackHole.gd" id="4_81xng"]
+[ext_resource type="Script" uid="uid://52pdodt7tt8q" path="res://Scripts/BlackHole.gd" id="4_81xng"]
 [ext_resource type="PackedScene" uid="uid://dxmmor12a0b6k" path="res://Scenes/game_ui.tscn" id="5_wqkje"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_81xng"]
