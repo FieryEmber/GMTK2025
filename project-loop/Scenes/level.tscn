@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://cod6g8i54sqnc" path="res://Scenes/black_hole.tscn" id="3_6phgx"]
 [ext_resource type="Texture2D" uid="uid://5wpvu6bihcof" path="res://Scenes/Sprites/Textures/Tileset2.png" id="3_81xng"]
 [ext_resource type="Script" uid="uid://52pdodt7tt8q" path="res://Scripts/BlackHole.gd" id="4_81xng"]
-[ext_resource type="PackedScene" uid="uid://dxmmor12a0b6k" path="res://Scenes/game_ui.tscn" id="5_wqkje"]
-[ext_resource type="PackedScene" uid="uid://cnyq1nlvmdf36" path="res://Scenes/helmet_piece.tscn" id="7_8c0lf"]
+[ext_resource type="PackedScene" uid="uid://bnpre57aaiihv" path="res://Scenes/game_ui.tscn" id="5_wqkje"]
+[ext_resource type="PackedScene" path="res://Scenes/helmet_piece.tscn" id="7_8c0lf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_81xng"]
 texture = ExtResource("2_6phgx")
