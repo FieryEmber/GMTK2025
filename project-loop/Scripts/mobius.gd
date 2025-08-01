@@ -5,6 +5,7 @@ extends CharacterBody2D
 
 @onready var start_delaytimer = $StartDelayTimer
 @onready var game_loop_timer = $GameLoopTimer
+@onready var teleport_timer = $TeleportTimer
 @onready var timer_label = $"../HUD/TimerLabel"
 
 var game_time_remaining = 24
@@ -58,9 +59,10 @@ func _physics_process(delta):
 		
 	#Teleport
 	if Input.is_action_just_pressed("teleport") and is_on_floor():
+		teleport_timer.start()
 		self.position = get_global_mouse_position()
 		self.velocity.y = 0
-
+	
 	# Reset jump count when on floor
 	if is_on_floor():
 		jump_count = 0
@@ -81,7 +83,6 @@ func _physics_process(delta):
 
 func _on_game_loop_timer_timeout() -> void:
 	game_time_remaining -= 1;
-	print("Time remaining:", game_time_remaining)
 	timer_label.text = "Time Remaining: " + str(game_time_remaining)
 	
 	if game_time_remaining <= 0:
@@ -95,13 +96,12 @@ func _on_game_loop_timer_timeout() -> void:
 		black_hole.reset()
 		start_delaytimer.start()
 
-
 func _on_start_delay_timer_timeout() -> void:
 	if loop_started:
 		return
 	
 	black_hole.grow()
-		
+
 	print("StartDelayTimer fired!")
 	loop_started = true
 	game_time_remaining = 30
@@ -112,6 +112,13 @@ func _on_start_delay_timer_timeout() -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body == self:
 		print("Player hit the black hole!")
+		game_loop_timer.stop()
 		global_position = spawn_position
 		velocity = Vector2.ZERO
+		delay_started = false
+		countdown_started = false
+		loop_started = false
 		black_hole.reset()
+		start_delaytimer.start()
+		timer_label.text = "Looped!"
+		
