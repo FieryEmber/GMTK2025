@@ -720,6 +720,11 @@ radius = 52.0096
 position = Vector2(156, -17)
 collision_mask = 3
 
+[node name="StartDelayTimer" type="Timer" parent="Mobius"]
+wait_time = 5.0
+
+[node name="GameLoopTimer" type="Timer" parent="Mobius"]
+
 [node name="Tilemap" type="Node2D" parent="."]
 
 [node name="1" type="TileMapLayer" parent="Tilemap"]
@@ -780,13 +785,13 @@ unlock_left = true
 
 [node name="HelmetPiece2" parent="." instance=ExtResource("7_8c0lf")]
 position = Vector2(-2033, 883)
-unlock_move_down = true
-
-[node name="HelmetPiece3" parent="." instance=ExtResource("7_8c0lf")]
-position = Vector2(-982, -590)
 unlock_jump = true
 
+[node name="HelmetPiece3" parent="." instance=ExtResource("7_8c0lf")]
+position = Vector2(-981, -597)
+unlock_double_jump = true
+
+[connection signal="timeout" from="Mobius/StartDelayTimer" to="Mobius" method="_on_start_delay_timer_timeout"]
+[connection signal="timeout" from="Mobius/GameLoopTimer" to="Mobius" method="_on_game_loop_timer_timeout"]
 [connection signal="body_entered" from="Tilemap/Area2D" to="Mobius" method="_on_area_2d_body_entered"]
 [connection signal="piece_collected" from="HelmetPiece" to="Mobius" method="_on_helmet_piece_piece_collected"]
-[connection signal="piece_collected" from="HelmetPiece2" to="Mobius" method="_on_helmet_piece_2_piece_collected"]
-[connection signal="piece_collected" from="HelmetPiece3" to="Mobius" method="_on_helmet_piece_3_piece_collected"]
