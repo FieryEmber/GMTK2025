@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://bvlxjotlrqpko"]
+[gd_scene load_steps=22 format=4 uid="uid://bvlxjotlrqpko"]
 
 [ext_resource type="PackedScene" uid="uid://dxfbf4g57yf" path="res://Scenes/mobius.tscn" id="1_tumq0"]
 [ext_resource type="Texture2D" uid="uid://bsodahfhrujyc" path="res://Scenes/Sprites/Textures/TempSprites.png" id="2_6phgx"]
@@ -9,8 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://yovpi1m0dxfq" path="res://Scenes/helmet_piece.tscn" id="7_8c0lf"]
 [ext_resource type="Texture2D" uid="uid://mrrk3gk4w4yc" path="res://Scenes/Sprites/Textures/Crystal2.png" id="8_bvt00"]
 [ext_resource type="Texture2D" uid="uid://e1un7hhtutt6" path="res://Scenes/Sprites/Textures/Crystal3.png" id="9_oqgf2"]
-[ext_resource type="Texture2D" uid="uid://qw02uxw88stp" path="res://Scenes/Sprites/Textures/Crystal4.png" id="10_qxfql"]
-[ext_resource type="Texture2D" uid="uid://demvcg1ayndjl" path="res://Scenes/Sprites/Textures/Crystal5.png" id="11_ha31o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_81xng"]
 texture = ExtResource("2_6phgx")
@@ -793,35 +791,9 @@ unlock_move_down = true
 [node name="Sprite2D" parent="HelmetPiece2" index="0"]
 texture = ExtResource("9_oqgf2")
 
-[node name="HelmetPiece3" parent="." instance=ExtResource("7_8c0lf")]
-position = Vector2(-3441, -2)
-unlock_double_jump = true
-
-[node name="HelmetPiece4" parent="." instance=ExtResource("7_8c0lf")]
-position = Vector2(-2178, 1119)
-unlock_jump = true
-
-[node name="Sprite2D" parent="HelmetPiece4" index="0"]
-texture = ExtResource("10_qxfql")
-
-[node name="HelmetPiece5" parent="." instance=ExtResource("7_8c0lf")]
-position = Vector2(-897, -611)
-unlock_jump = true
-
-[node name="Sprite2D" parent="HelmetPiece5" index="0"]
-texture = ExtResource("11_ha31o")
-
-[node name="AnimationPlayer" parent="HelmetPiece5" index="2"]
-root_node = NodePath("../../HelmetPiece5")
-
 [connection signal="body_entered" from="Tilemap/Area2D" to="Mobius" method="_on_area_2d_body_entered"]
 [connection signal="piece_collected" from="HelmetPiece" to="Mobius" method="_on_helmet_piece_piece_collected"]
 [connection signal="piece_collected" from="HelmetPiece2" to="Mobius" method="_on_helmet_piece_2_piece_collected"]
-[connection signal="piece_collected" from="HelmetPiece3" to="Mobius" method="_on_helmet_piece_3_piece_collected"]
-[connection signal="piece_collected" from="HelmetPiece4" to="Mobius" method="_on_helmet_piece_2_piece_collected"]
-[connection signal="piece_collected" from="HelmetPiece5" to="Mobius" method="_on_helmet_piece_2_piece_collected"]
 
 [editable path="HelmetPiece"]
 [editable path="HelmetPiece2"]
-[editable path="HelmetPiece4"]
-[editable path="HelmetPiece5"]
