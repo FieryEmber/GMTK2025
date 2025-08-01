@@ -5,6 +5,8 @@ class_name Mobius
 @export var SPEED = 190
 @export var JUMP_VELOCITY = -400
 
+@onready var droptimer: Timer = $Droptimer
+
 var spawn_position = Vector2.ZERO
 var spawn_position_2 = Vector2(-100, 0)
 var spawn_checkpoint = 0
@@ -12,14 +14,15 @@ var loop_started = false
 var black_hole_active = false
 
 # Mobius allowed movement
-var can_move_right = true
-var can_move_left = false
-var can_move_down = false
-var can_jump = false 
-var can_double_jump = false
-var can_teleport = false
-var started_input = false
-
+#region AbilityChecks
+@export var can_move_right = true
+@export var can_move_left = false
+@export var can_move_down = false
+@export var can_jump = false 
+@export var can_double_jump = false
+@export var can_teleport = false
+@export var started_input = false
+#endregion
 const GRAVITY = 900
 const JUMP_CUT_MULTIPLIER = 0.2
 const MAX_JUMPS = 2
@@ -52,11 +55,11 @@ func _physics_process(delta):
 	else: 
 		velocity.x = 0
 	
-	if Input.is_action_pressed("down") and can_move_down and is_on_floor():
-		velocity.y += 50  
-		move_and_slide()  
-		
-
+	if Input.is_action_pressed("down") and can_move_down:
+		set_collision_mask_value(2,false)
+		print("moved down")
+		droptimer.start()
+	
 	# Jump
 	if Input.is_action_just_pressed("jump") and can_jump:
 		if is_on_floor():
@@ -99,7 +102,7 @@ func _physics_process(delta):
 		else:
 			anim.play("jump")
 			animation_player.play("Jump_skew")
-
+	
 	move_and_slide()
 
 func unlock_from_piece(piece: HelmetPiece) -> void:
@@ -165,3 +168,8 @@ func _on_helmet_piece_3_piece_collected(piece: HelmetPiece) -> void:
 	unlock_from_piece(piece)
 	black_hole.growth_rate = 0.60
 	spawn_checkpoint = 3
+
+
+func _on_droptimer_timeout() -> void:
+	set_collision_mask_value(2,true)
+	pass # Replace with function body.
