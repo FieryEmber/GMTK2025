@@ -275,3 +275,9 @@ position_smoothing_speed = 25.0
 libraries = {
 &"": SubResource("AnimationLibrary_iq4ay")
 }
+
+[node name="Droptimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="Droptimer" to="." method="_on_droptimer_timeout"]
