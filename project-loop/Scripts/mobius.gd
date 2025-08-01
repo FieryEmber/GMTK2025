@@ -12,6 +12,14 @@ var delay_started = false
 var spawn_position = Vector2.ZERO
 var loop_started = false
 
+# Mobius allowed movement
+var can_move_right = true
+var can_move_left = false
+var can_move_down = false
+var can_jump = false 
+var can_double_jump = false
+var can_teleport = false
+
 const GRAVITY = 900
 const JUMP_CUT_MULTIPLIER = 0.2
 const MAX_JUMPS = 2
@@ -34,23 +42,28 @@ func _physics_process(delta):
 	velocity.x = 0
 
 	# Horizontal movement
-	if Input.is_action_pressed("left"):
-		velocity.x -= SPEED
-		is_moving = true
-		anim.flip_h = true
-	elif Input.is_action_pressed("right"):
+	if Input.is_action_pressed("right") and can_move_right:
 		velocity.x += SPEED
 		is_moving = true
 		anim.flip_h = false
-	else:
+	elif Input.is_action_pressed("left") and can_move_left:
+		velocity.x -= SPEED
+		is_moving = true
+		anim.flip_h = true
+	else: 
 		velocity.x = 0
 
 	# Jump
-	if Input.is_action_just_pressed("jump") and jump_count < MAX_JUMPS-1:
-		velocity.y = JUMP_VELOCITY
-		anim.play("jump")
-		jump_count += 1
-
+	if Input.is_action_just_pressed("jump") and can_jump:
+		if is_on_floor():
+			velocity.y = JUMP_VELOCITY
+			anim.play("jump")
+			jump_count = 1
+		elif can_double_jump and jump_count < MAX_JUMPS:
+			velocity.y = JUMP_VELOCITY
+			anim.play("jump")
+			jump_count += 1
+		
 	# Variable jump height
 	if velocity.y < 0 and Input.is_action_just_released("jump"):
 		velocity.y *= JUMP_CUT_MULTIPLIER
