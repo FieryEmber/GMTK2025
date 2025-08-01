@@ -1030,3 +1030,11 @@ texture = SubResource("AtlasTexture_gjrx4")
 material = SubResource("ShaderMaterial_iysgs")
 position = Vector2(1016, 545)
 texture = SubResource("AtlasTexture_46ak0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -10
+offset_left = -219.0
+offset_top = -130.0
+offset_right = 2066.0
+offset_bottom = 1250.0
+color = Color(0, 0, 0, 1)

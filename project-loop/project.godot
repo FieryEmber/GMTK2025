@@ -88,7 +88,3 @@ Page_turn={
 [physics]
 
 common/physics_ticks_per_second=240
-
-[rendering]
-
-environment/defaults/default_clear_color=Color(0, 0, 0, 1)

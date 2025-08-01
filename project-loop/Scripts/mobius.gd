@@ -16,12 +16,12 @@ var spawn_position_2 = Vector2(-100, 0)
 var loop_started = false
 
 # Mobius allowed movement
-var can_move_right = true
-var can_move_left = false
-var can_move_down = false
-var can_jump = false 
-var can_double_jump = false
-var can_teleport = false
+@export var can_move_right = true
+@export var can_move_left = false
+@export var can_move_down = false
+@export var can_jump = false 
+@export var can_double_jump = false
+@export var can_teleport = false
 
 const GRAVITY = 900
 const JUMP_CUT_MULTIPLIER = 0.2
