@@ -34,6 +34,7 @@ const MAX_JUMPS = 2
 @onready var anim = $AnimatedSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var black_hole := $"../Tilemap/Area2D" as BlackHole
+@onready var one_way = $"../Tilemap/0Platforms"
 
 var jump_count = 0
 
@@ -60,9 +61,9 @@ func _physics_process(delta):
 		velocity.x = 0
 	
 	if Input.is_action_pressed("down") and can_move_down:
-		velocity.y += 50  
-		move_and_slide()  
-		
+		velocity.y += 50
+		move_and_slide()
+		one_way.collision_enabled = false
 
 	# Jump
 	if Input.is_action_just_pressed("jump") and can_jump:
@@ -78,8 +79,10 @@ func _physics_process(delta):
 			started_input = true
 		
 	# Variable jump height
-	if velocity.y < 0 and Input.is_action_just_released("jump"):
-		velocity.y *= JUMP_CUT_MULTIPLIER
+	if velocity.y < 0:
+		one_way.collision_enabled = true
+		if Input.is_action_just_released("jump"):
+			velocity.y *= JUMP_CUT_MULTIPLIER
 	
 	#Teleport
 	if Input.is_action_just_pressed("teleport") and can_teleport and is_on_floor():
@@ -182,7 +185,6 @@ func reset_player_position() -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body == self:
-		print("Player hit the black hole!")
 		game_loop_timer.stop()
 		global_position = spawn_position
 		reset_player_position()
