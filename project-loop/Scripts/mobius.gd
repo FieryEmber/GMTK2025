@@ -17,11 +17,11 @@ var black_hole_active = false
 
 
 var can_move_right = true
-var can_move_left = false
-var can_move_down = false
+var can_move_left = true
+var can_move_down = true
 var can_jump = false 
-var can_double_jump = false
-var can_teleport = false
+var can_double_jump = true
+var can_teleport = true
 var started_input = false
 
 
@@ -159,6 +159,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		black_hole.reset()
 		black_hole.stop_growing()
 		black_hole_active = false
+		started_input = false
 
 
 func _on_helmet_piece_piece_collected(piece: HelmetPiece) -> void:
