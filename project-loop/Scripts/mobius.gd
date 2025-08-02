@@ -11,19 +11,19 @@ var spawn_position = Vector2.ZERO
 var spawn_position_2 = Vector2(-100, 0)
 var spawn_checkpoint = 0
 var loop_started = false
-var black_hole_active = true
+var black_hole_active = false
 
 # Mobius allowed movement
 
-#region AbilityChecks
-@export var can_move_right = true
-@export var can_move_left = false
-@export var can_move_down = false
-@export var can_jump = false 
-@export var can_double_jump = false
-@export var can_teleport = false
-@export var started_input = false
-#endregion
+
+var can_move_right = true
+var can_move_left = false
+var can_move_down = false
+var can_jump = false 
+var can_double_jump = false
+var can_teleport = false
+var started_input = false
+
 
 const GRAVITY = 900
 const JUMP_CUT_MULTIPLIER = 0.2
@@ -120,21 +120,26 @@ func unlock_from_piece(piece: HelmetPiece) -> void:
 		can_teleport = true
 		
 func get_dynamic_growth_rate() -> float:
-	var base_rate = 0.60
+	var base_rate = 0.30
 	
 	if can_move_left:
-		base_rate -= 0.05
+		base_rate = 0.30
+		base_rate -= 0.12
 		
 	if can_move_down:
-		base_rate -= 0.05
+		base_rate = 0.30
+		base_rate -= 0.10
 	
 	if can_jump:
+		base_rate = 0.30
 		base_rate -= 0.10
 	
 	if can_double_jump:
+		base_rate = 0.30
 		base_rate -= 0.10
 	
 	if can_teleport:
+		base_rate = 0.30
 		base_rate -= 0.10
 		
 	return base_rate
@@ -160,6 +165,7 @@ func _on_helmet_piece_piece_collected(piece: HelmetPiece) -> void:
 	unlock_from_piece(piece)
 	black_hole.growth_rate = 0.60
 	spawn_checkpoint = 1
+	
 
 func _on_helmet_piece_2_piece_collected(piece: HelmetPiece) -> void:
 	unlock_from_piece(piece)
