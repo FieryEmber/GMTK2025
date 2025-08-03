@@ -20,7 +20,7 @@ var can_move_right = true
 var can_move_left = false
 var can_move_down = false
 var can_jump = false 
-var can_double_jump = true
+var can_double_jump = false
 var can_teleport = false
 var started_input = false
 
@@ -72,7 +72,7 @@ func _physics_process(delta):
 			anim.play("jump")
 			jump_count = 1
 			started_input = true
-		elif can_double_jump and jump_count < MAX_JUMPS:
+		elif can_double_jump and jump_count < MAX_JUMPS-1:
 			velocity.y = JUMP_VELOCITY
 			anim.play("jump")
 			jump_count += 1
@@ -99,7 +99,7 @@ func _physics_process(delta):
 
 	# Reset jump count when on floor
 	if is_on_floor():
-		has_teleported = false
+		has_teleported = true
 		jump_count = 0
 		if is_moving:
 			anim.play("walking")
