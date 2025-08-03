@@ -1,3 +1,7 @@
+<<<<<<< Updated upstream
 [gd_scene format=3 uid="uid://v85gffsvegs5"]
+=======
+[gd_scene format=3 uid="uid://ce6kxm3up8vgm"]
+>>>>>>> Stashed changes
 
 [node name="SFX" type="AudioStreamPlayer"]
