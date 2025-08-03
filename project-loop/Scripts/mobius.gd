@@ -99,7 +99,7 @@ func _physics_process(delta):
 
 	# Reset jump count when on floor
 	if is_on_floor():
-		has_teleported = true
+		has_teleported = false
 		jump_count = 0
 		if is_moving:
 			anim.play("walking")
