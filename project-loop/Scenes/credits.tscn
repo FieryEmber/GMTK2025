@@ -1,0 +1,107 @@
+[gd_scene load_steps=7 format=3 uid="uid://c88j8qcy61fxi"]
+
+[ext_resource type="Script" uid="uid://c35tc1foduk6c" path="res://Scripts/credits.gd" id="1_r18jl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4ad4"]
+bg_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e4ad4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r18jl"]
+bg_color = Color(0.619612, 0.77051, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gryuy"]
+bg_color = Color(0.379869, 0.445775, 0.56033, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ccovl"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r18jl")
+
+[node name="Black" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -542.0
+offset_right = 1920.0
+offset_bottom = 538.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_e4ad4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 158.0
+offset_top = 840.0
+offset_right = 493.0
+offset_bottom = 988.0
+
+[node name="Back to Menu" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e4ad4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r18jl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gryuy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ccovl")
+text = "Back to Menu"
+
+[node name="Main Text" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 77.0
+offset_top = 48.0
+offset_right = 1448.0
+offset_bottom = 753.0
+theme_override_font_sizes/font_size = 60
+text = "SPARK Studio Games
+
+Jake Albohn
+Jaden Hunt
+Hayden Galyean
+\"Ben\"
+\"HackMan1248\""
+editable = false
+
+[node name="Music Credit" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 915.0
+offset_top = 804.0
+offset_right = 1545.0
+offset_bottom = 1030.0
+theme_override_font_sizes/font_size = 28
+text = "Music Credit
+
+In The Blink Of An Eye/Collateral Damage - Composed by One Man Symphony - https://onemansymphony.bandcamp.com"
+editable = false
+wrap_mode = 1
+
+[connection signal="pressed" from="VBoxContainer/Back to Menu" to="." method="_on_back_to_menu_pressed"]
