@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://wocjkaul4voy" path="res://Scenes/Sprites/StoryTextures/pfp.png" id="1_6b1b0"]
 [ext_resource type="Script" uid="uid://cn20k0il7775p" path="res://Scripts/splash_screen.gd" id="1_wwf30"]
-[ext_resource type="PackedScene" uid="uid://c213yflbm6qh7" path="res://Scenes/main_menu.tscn" id="2_h5jmx"]
+[ext_resource type="PackedScene" uid="uid://p0k8ilkw1sid" path="res://Scenes/main_menu.tscn" id="2_h5jmx"]
 
 [node name="SplashScreen" type="Control" node_paths=PackedStringArray("splash_screen")]
 layout_mode = 3
