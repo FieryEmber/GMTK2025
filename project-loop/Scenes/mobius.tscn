@@ -406,3 +406,13 @@ position_smoothing_speed = 25.0
 libraries = {
 &"": SubResource("AnimationLibrary_iq4ay")
 }
+
+[node name="Droptimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="TeleportCooldown" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="timeout" from="Droptimer" to="." method="_on_droptimer_timeout"]
+[connection signal="timeout" from="TeleportCooldown" to="." method="_on_teleport_cooldown_timeout"]

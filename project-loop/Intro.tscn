@@ -1,0 +1,1040 @@
+[gd_scene load_steps=26 format=3 uid="uid://bmw4mdw8urkfo"]
+
+[ext_resource type="Script" uid="uid://cgavc7l4yxcqd" path="res://intro.gd" id="1_vltdc"]
+[ext_resource type="Texture2D" uid="uid://ju404h60dtr6" path="res://Scenes/Sprites/StoryTextures/Cutscene2.png" id="2_vltdc"]
+
+[sub_resource type="Shader" id="Shader_sb8jg"]
+code = "shader_type canvas_item;
+uniform bool flip_h = false;
+uniform bool flip_v = false;
+uniform float progress : hint_range(0.0, 1.0, 0.001) = 0.0;
+uniform float x_end_factor : hint_range(0.5, 3.0, 0.001) = 2.0;
+uniform float y_end_factor : hint_range(-3.0, 1.0, 0.001) = -1.5;
+uniform float reverse_dark : hint_range(0.2, 1.0, 0.01) = 0.75;
+const vec2 scale = vec2(1.,1.);
+
+vec2 Line2point(vec2 linePoint,vec2 lineDire,vec2 point) {
+	lineDire = normalize(lineDire);
+	vec2 line2Ori = - linePoint - dot(-linePoint,lineDire)*lineDire;
+	vec2 p2Ori = - point - dot(-point,lineDire)*lineDire;
+	return line2Ori-p2Ori;
+	}
+
+vec4 ColorWithA(vec4 oldCol,vec4 newCol){
+	vec4 finalCol;
+	if((newCol.a + oldCol.a)>=1.)
+	{
+		finalCol.rgb = newCol.rgb ;
+		finalCol.a =1.0;
+	}
+	else{
+		finalCol.rgb = newCol.a/(newCol.a + oldCol.a)*newCol.rgb + oldCol.a/(newCol.a + oldCol.a)*oldCol.rgb;
+		finalCol.a = oldCol.a +newCol.a;
+		}
+	return 	finalCol;
+	}
+
+void fragment() {
+    vec2 uv = UV;
+	vec2 mouse_pos = (1.0 / TEXTURE_PIXEL_SIZE) * vec2(x_end_factor * progress, (y_end_factor - 1.0) * progress + 1.0);
+
+	if (flip_h) {uv.x = 1.0 - uv.x;}
+	if (flip_v) {uv.y = 1.0 - uv.y;}
+
+	vec4 finalColor = vec4(0.0); // Initialize with transparent color
+	float scale_min = scale.x/scale.y;
+	vec2 uv_max = vec2(scale_min,1.);
+	float trueScale;
+	if(scale.y<scale.x){
+		scale_min = scale.y/scale.x;
+		uv.y = uv.y * scale_min;
+		uv_max = vec2(1.,scale_min);
+		trueScale = scale.x;
+		}
+	else{
+		uv.x = uv.x*scale_min;
+		trueScale = scale.y;
+	}
+
+	vec2 pPos = uv / TEXTURE_PIXEL_SIZE * trueScale;
+	if (mouse_pos.x>-0.0001)
+	{
+		vec2 left_bottom = vec2(0.,uv_max.y/TEXTURE_PIXEL_SIZE.y * trueScale);
+		vec2 midpoint = (mouse_pos - left_bottom)/2. + left_bottom;
+		vec2 midDirect = normalize(vec2(-(mouse_pos-left_bottom).y,(mouse_pos-left_bottom).x));
+		//bg
+
+		//pageback
+		vec2 sharpPoint = vec2(0.,midpoint.y - midDirect.y/midDirect.x * midpoint.x);
+		vec2 flipEdgeDire = normalize(sharpPoint - mouse_pos);
+		//pagebackBottom
+		vec2 sharpPointB = vec2(midpoint.x-midDirect.x/midDirect.y * (midpoint-left_bottom).y,left_bottom.y);
+		vec2 flipEdgeDireB = normalize(sharpPointB - mouse_pos);
+
+		float cyOriOff = length(mouse_pos-left_bottom);
+		if (cyOriOff>100.) cyOriOff = 100.;
+		float cyR = cyOriOff*2./PI;
+		float pageHDire = PI/6.;
+		vec2 midlineToP = Line2point(midpoint,midDirect,pPos);
+		vec2 sideEdgeToP = Line2point(mouse_pos,flipEdgeDire,pPos);
+		vec2 BottomEdgeToP = Line2point(mouse_pos,flipEdgeDireB,pPos);
+
+		vec2 cyOriToP = midlineToP - normalize(mouse_pos- left_bottom)*cyOriOff;
+		vec2 cyEdgeToP = midlineToP - normalize(mouse_pos- left_bottom)*(cyOriOff-cyR);
+
+		bool atBG = (cyOriToP).x<=-0.01;
+		bool atPageBack = !atBG&&(sideEdgeToP.y>0.)&&(BottomEdgeToP.x<=0.);
+		bool atCy = cyEdgeToP.x >=0. && (cyOriToP).x<=0.;
+		bool atCyPage = false;
+		vec2 uvCy ;
+		vec2 uvCyB ;
+
+		float shadow = 1.;
+		if (atCy){
+			vec2 cyOri = pPos-cyOriToP;
+			vec2 trueDis = cyR*  asin(length(cyOriToP)/cyR)*normalize(cyOriToP);
+			vec2 truePos = cyOri+trueDis;
+
+			vec2 sideEdgeToTP = Line2point(mouse_pos,flipEdgeDire,truePos);
+			vec2 BottomEdgeToTP = Line2point(mouse_pos,flipEdgeDireB,truePos);
+			uvCyB = truePos * TEXTURE_PIXEL_SIZE /trueScale;
+			shadow *= 1.-pow(length(trueDis)/(cyR*PI/2.),3.);
+
+			if ((BottomEdgeToTP.x<0.)&& (sideEdgeToTP.y>0.))
+				{
+					atCyPage = true;
+					uvCy = vec2(length(sideEdgeToTP),left_bottom.y-length(BottomEdgeToTP))*TEXTURE_PIXEL_SIZE /trueScale;
+				}
+
+			if ((uvCyB.x > uv_max.x)||(uvCyB.y > uv_max.y)||(uvCyB.x <= 0.)|| (uvCyB.y <= 0.))
+				atCy =false;
+		}
+
+    // Page
+    if (!atBG && !atCy) {
+		vec2 temp_uv = uv;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 color = texture(TEXTURE, temp_uv);
+        finalColor = color;
+    }
+
+    // cyBottom
+    if (atCy) {
+		vec2 temp_uv = uvCyB;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 cyColor = texture(TEXTURE, temp_uv);
+        finalColor = cyColor;
+    }
+
+    if (atCyPage) {
+		vec2 temp_uv = uvCy;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 cyPageColor = texture(TEXTURE, temp_uv);
+        cyPageColor.rgb *= reverse_dark;
+        // Blend based on the alpha value of cyPageColor
+        finalColor = mix(finalColor, cyPageColor, cyPageColor.a);
+    }
+	else if (atPageBack) {
+        vec2 temp_uv = vec2(length(sideEdgeToP), left_bottom.y - length(BottomEdgeToP)) * TEXTURE_PIXEL_SIZE / trueScale;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 pageBackColor = texture(TEXTURE, temp_uv);
+        pageBackColor.rgb *= reverse_dark;  // 使掀起的反面稍微变暗
+        // Blend based on the alpha value of pageBackColor
+        finalColor = mix(finalColor, pageBackColor, pageBackColor.a);
+    }
+
+    COLOR = finalColor;
+}
+
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vltdc"]
+shader = SubResource("Shader_sb8jg")
+shader_parameter/flip_h = false
+shader_parameter/flip_v = false
+shader_parameter/progress = 0.0
+shader_parameter/x_end_factor = 2.0
+shader_parameter/y_end_factor = -1.5
+shader_parameter/reverse_dark = 0.75
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4ad6s"]
+load_path = "res://.godot/imported/Cutscene2.png-2bd58a902cd4a5cc25e47e22dd40fbc7.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7136s"]
+atlas = SubResource("CompressedTexture2D_4ad6s")
+region = Rect2(276, 0, 146, 283)
+
+[sub_resource type="Shader" id="Shader_33sem"]
+code = "shader_type canvas_item;
+uniform bool flip_h = false;
+uniform bool flip_v = false;
+uniform float progress : hint_range(0.0, 1.0, 0.001) = 0.0;
+uniform float x_end_factor : hint_range(0.5, 3.0, 0.001) = 2.0;
+uniform float y_end_factor : hint_range(-3.0, 1.0, 0.001) = -1.5;
+uniform float reverse_dark : hint_range(0.2, 1.0, 0.01) = 0.75;
+const vec2 scale = vec2(1.,1.);
+
+vec2 Line2point(vec2 linePoint,vec2 lineDire,vec2 point) {
+	lineDire = normalize(lineDire);
+	vec2 line2Ori = - linePoint - dot(-linePoint,lineDire)*lineDire;
+	vec2 p2Ori = - point - dot(-point,lineDire)*lineDire;
+	return line2Ori-p2Ori;
+	}
+
+vec4 ColorWithA(vec4 oldCol,vec4 newCol){
+	vec4 finalCol;
+	if((newCol.a + oldCol.a)>=1.)
+	{
+		finalCol.rgb = newCol.rgb ;
+		finalCol.a =1.0;
+	}
+	else{
+		finalCol.rgb = newCol.a/(newCol.a + oldCol.a)*newCol.rgb + oldCol.a/(newCol.a + oldCol.a)*oldCol.rgb;
+		finalCol.a = oldCol.a +newCol.a;
+		}
+	return 	finalCol;
+	}
+
+void fragment() {
+    vec2 uv = UV;
+	vec2 mouse_pos = (1.0 / TEXTURE_PIXEL_SIZE) * vec2(x_end_factor * progress, (y_end_factor - 1.0) * progress + 1.0);
+
+	if (flip_h) {uv.x = 1.0 - uv.x;}
+	if (flip_v) {uv.y = 1.0 - uv.y;}
+
+	vec4 finalColor = vec4(0.0); // Initialize with transparent color
+	float scale_min = scale.x/scale.y;
+	vec2 uv_max = vec2(scale_min,1.);
+	float trueScale;
+	if(scale.y<scale.x){
+		scale_min = scale.y/scale.x;
+		uv.y = uv.y * scale_min;
+		uv_max = vec2(1.,scale_min);
+		trueScale = scale.x;
+		}
+	else{
+		uv.x = uv.x*scale_min;
+		trueScale = scale.y;
+	}
+
+	vec2 pPos = uv / TEXTURE_PIXEL_SIZE * trueScale;
+	if (mouse_pos.x>-0.0001)
+	{
+		vec2 left_bottom = vec2(0.,uv_max.y/TEXTURE_PIXEL_SIZE.y * trueScale);
+		vec2 midpoint = (mouse_pos - left_bottom)/2. + left_bottom;
+		vec2 midDirect = normalize(vec2(-(mouse_pos-left_bottom).y,(mouse_pos-left_bottom).x));
+		//bg
+
+		//pageback
+		vec2 sharpPoint = vec2(0.,midpoint.y - midDirect.y/midDirect.x * midpoint.x);
+		vec2 flipEdgeDire = normalize(sharpPoint - mouse_pos);
+		//pagebackBottom
+		vec2 sharpPointB = vec2(midpoint.x-midDirect.x/midDirect.y * (midpoint-left_bottom).y,left_bottom.y);
+		vec2 flipEdgeDireB = normalize(sharpPointB - mouse_pos);
+
+		float cyOriOff = length(mouse_pos-left_bottom);
+		if (cyOriOff>100.) cyOriOff = 100.;
+		float cyR = cyOriOff*2./PI;
+		float pageHDire = PI/6.;
+		vec2 midlineToP = Line2point(midpoint,midDirect,pPos);
+		vec2 sideEdgeToP = Line2point(mouse_pos,flipEdgeDire,pPos);
+		vec2 BottomEdgeToP = Line2point(mouse_pos,flipEdgeDireB,pPos);
+
+		vec2 cyOriToP = midlineToP - normalize(mouse_pos- left_bottom)*cyOriOff;
+		vec2 cyEdgeToP = midlineToP - normalize(mouse_pos- left_bottom)*(cyOriOff-cyR);
+
+		bool atBG = (cyOriToP).x<=-0.01;
+		bool atPageBack = !atBG&&(sideEdgeToP.y>0.)&&(BottomEdgeToP.x<=0.);
+		bool atCy = cyEdgeToP.x >=0. && (cyOriToP).x<=0.;
+		bool atCyPage = false;
+		vec2 uvCy ;
+		vec2 uvCyB ;
+
+		float shadow = 1.;
+		if (atCy){
+			vec2 cyOri = pPos-cyOriToP;
+			vec2 trueDis = cyR*  asin(length(cyOriToP)/cyR)*normalize(cyOriToP);
+			vec2 truePos = cyOri+trueDis;
+
+			vec2 sideEdgeToTP = Line2point(mouse_pos,flipEdgeDire,truePos);
+			vec2 BottomEdgeToTP = Line2point(mouse_pos,flipEdgeDireB,truePos);
+			uvCyB = truePos * TEXTURE_PIXEL_SIZE /trueScale;
+			shadow *= 1.-pow(length(trueDis)/(cyR*PI/2.),3.);
+
+			if ((BottomEdgeToTP.x<0.)&& (sideEdgeToTP.y>0.))
+				{
+					atCyPage = true;
+					uvCy = vec2(length(sideEdgeToTP),left_bottom.y-length(BottomEdgeToTP))*TEXTURE_PIXEL_SIZE /trueScale;
+				}
+
+			if ((uvCyB.x > uv_max.x)||(uvCyB.y > uv_max.y)||(uvCyB.x <= 0.)|| (uvCyB.y <= 0.))
+				atCy =false;
+		}
+
+    // Page
+    if (!atBG && !atCy) {
+		vec2 temp_uv = uv;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 color = texture(TEXTURE, temp_uv);
+        finalColor = color;
+    }
+
+    // cyBottom
+    if (atCy) {
+		vec2 temp_uv = uvCyB;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 cyColor = texture(TEXTURE, temp_uv);
+        finalColor = cyColor;
+    }
+
+    if (atCyPage) {
+		vec2 temp_uv = uvCy;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 cyPageColor = texture(TEXTURE, temp_uv);
+        cyPageColor.rgb *= reverse_dark;
+        // Blend based on the alpha value of cyPageColor
+        finalColor = mix(finalColor, cyPageColor, cyPageColor.a);
+    }
+	else if (atPageBack) {
+        vec2 temp_uv = vec2(length(sideEdgeToP), left_bottom.y - length(BottomEdgeToP)) * TEXTURE_PIXEL_SIZE / trueScale;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 pageBackColor = texture(TEXTURE, temp_uv);
+        pageBackColor.rgb *= reverse_dark;  // 使掀起的反面稍微变暗
+        // Blend based on the alpha value of pageBackColor
+        finalColor = mix(finalColor, pageBackColor, pageBackColor.a);
+    }
+
+    COLOR = finalColor;
+}
+
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_46ak0"]
+shader = SubResource("Shader_33sem")
+shader_parameter/flip_h = false
+shader_parameter/flip_v = false
+shader_parameter/progress = 0.0
+shader_parameter/x_end_factor = 2.0
+shader_parameter/y_end_factor = -1.5
+shader_parameter/reverse_dark = 0.75
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1rpvy"]
+load_path = "res://.godot/imported/Cutscene2.png-2bd58a902cd4a5cc25e47e22dd40fbc7.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6omm5"]
+atlas = SubResource("CompressedTexture2D_1rpvy")
+region = Rect2(134, 0, 147, 283)
+
+[sub_resource type="Shader" id="Shader_iysgs"]
+code = "shader_type canvas_item;
+uniform bool flip_h = false;
+uniform bool flip_v = false;
+uniform float progress : hint_range(0.0, 1.0, 0.001) = 0.0;
+uniform float x_end_factor : hint_range(0.5, 3.0, 0.001) = 2.0;
+uniform float y_end_factor : hint_range(-3.0, 1.0, 0.001) = -1.5;
+uniform float reverse_dark : hint_range(0.2, 1.0, 0.01) = 0.75;
+const vec2 scale = vec2(1.,1.);
+
+vec2 Line2point(vec2 linePoint,vec2 lineDire,vec2 point) {
+	lineDire = normalize(lineDire);
+	vec2 line2Ori = - linePoint - dot(-linePoint,lineDire)*lineDire;
+	vec2 p2Ori = - point - dot(-point,lineDire)*lineDire;
+	return line2Ori-p2Ori;
+	}
+
+vec4 ColorWithA(vec4 oldCol,vec4 newCol){
+	vec4 finalCol;
+	if((newCol.a + oldCol.a)>=1.)
+	{
+		finalCol.rgb = newCol.rgb ;
+		finalCol.a =1.0;
+	}
+	else{
+		finalCol.rgb = newCol.a/(newCol.a + oldCol.a)*newCol.rgb + oldCol.a/(newCol.a + oldCol.a)*oldCol.rgb;
+		finalCol.a = oldCol.a +newCol.a;
+		}
+	return 	finalCol;
+	}
+
+void fragment() {
+    vec2 uv = UV;
+	vec2 mouse_pos = (1.0 / TEXTURE_PIXEL_SIZE) * vec2(x_end_factor * progress, (y_end_factor - 1.0) * progress + 1.0);
+
+	if (flip_h) {uv.x = 1.0 - uv.x;}
+	if (flip_v) {uv.y = 1.0 - uv.y;}
+
+	vec4 finalColor = vec4(0.0); // Initialize with transparent color
+	float scale_min = scale.x/scale.y;
+	vec2 uv_max = vec2(scale_min,1.);
+	float trueScale;
+	if(scale.y<scale.x){
+		scale_min = scale.y/scale.x;
+		uv.y = uv.y * scale_min;
+		uv_max = vec2(1.,scale_min);
+		trueScale = scale.x;
+		}
+	else{
+		uv.x = uv.x*scale_min;
+		trueScale = scale.y;
+	}
+
+	vec2 pPos = uv / TEXTURE_PIXEL_SIZE * trueScale;
+	if (mouse_pos.x>-0.0001)
+	{
+		vec2 left_bottom = vec2(0.,uv_max.y/TEXTURE_PIXEL_SIZE.y * trueScale);
+		vec2 midpoint = (mouse_pos - left_bottom)/2. + left_bottom;
+		vec2 midDirect = normalize(vec2(-(mouse_pos-left_bottom).y,(mouse_pos-left_bottom).x));
+		//bg
+
+		//pageback
+		vec2 sharpPoint = vec2(0.,midpoint.y - midDirect.y/midDirect.x * midpoint.x);
+		vec2 flipEdgeDire = normalize(sharpPoint - mouse_pos);
+		//pagebackBottom
+		vec2 sharpPointB = vec2(midpoint.x-midDirect.x/midDirect.y * (midpoint-left_bottom).y,left_bottom.y);
+		vec2 flipEdgeDireB = normalize(sharpPointB - mouse_pos);
+
+		float cyOriOff = length(mouse_pos-left_bottom);
+		if (cyOriOff>100.) cyOriOff = 100.;
+		float cyR = cyOriOff*2./PI;
+		float pageHDire = PI/6.;
+		vec2 midlineToP = Line2point(midpoint,midDirect,pPos);
+		vec2 sideEdgeToP = Line2point(mouse_pos,flipEdgeDire,pPos);
+		vec2 BottomEdgeToP = Line2point(mouse_pos,flipEdgeDireB,pPos);
+
+		vec2 cyOriToP = midlineToP - normalize(mouse_pos- left_bottom)*cyOriOff;
+		vec2 cyEdgeToP = midlineToP - normalize(mouse_pos- left_bottom)*(cyOriOff-cyR);
+
+		bool atBG = (cyOriToP).x<=-0.01;
+		bool atPageBack = !atBG&&(sideEdgeToP.y>0.)&&(BottomEdgeToP.x<=0.);
+		bool atCy = cyEdgeToP.x >=0. && (cyOriToP).x<=0.;
+		bool atCyPage = false;
+		vec2 uvCy ;
+		vec2 uvCyB ;
+
+		float shadow = 1.;
+		if (atCy){
+			vec2 cyOri = pPos-cyOriToP;
+			vec2 trueDis = cyR*  asin(length(cyOriToP)/cyR)*normalize(cyOriToP);
+			vec2 truePos = cyOri+trueDis;
+
+			vec2 sideEdgeToTP = Line2point(mouse_pos,flipEdgeDire,truePos);
+			vec2 BottomEdgeToTP = Line2point(mouse_pos,flipEdgeDireB,truePos);
+			uvCyB = truePos * TEXTURE_PIXEL_SIZE /trueScale;
+			shadow *= 1.-pow(length(trueDis)/(cyR*PI/2.),3.);
+
+			if ((BottomEdgeToTP.x<0.)&& (sideEdgeToTP.y>0.))
+				{
+					atCyPage = true;
+					uvCy = vec2(length(sideEdgeToTP),left_bottom.y-length(BottomEdgeToTP))*TEXTURE_PIXEL_SIZE /trueScale;
+				}
+
+			if ((uvCyB.x > uv_max.x)||(uvCyB.y > uv_max.y)||(uvCyB.x <= 0.)|| (uvCyB.y <= 0.))
+				atCy =false;
+		}
+
+    // Page
+    if (!atBG && !atCy) {
+		vec2 temp_uv = uv;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 color = texture(TEXTURE, temp_uv);
+        finalColor = color;
+    }
+
+    // cyBottom
+    if (atCy) {
+		vec2 temp_uv = uvCyB;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 cyColor = texture(TEXTURE, temp_uv);
+        finalColor = cyColor;
+    }
+
+    if (atCyPage) {
+		vec2 temp_uv = uvCy;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 cyPageColor = texture(TEXTURE, temp_uv);
+        cyPageColor.rgb *= reverse_dark;
+        // Blend based on the alpha value of cyPageColor
+        finalColor = mix(finalColor, cyPageColor, cyPageColor.a);
+    }
+	else if (atPageBack) {
+        vec2 temp_uv = vec2(length(sideEdgeToP), left_bottom.y - length(BottomEdgeToP)) * TEXTURE_PIXEL_SIZE / trueScale;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 pageBackColor = texture(TEXTURE, temp_uv);
+        pageBackColor.rgb *= reverse_dark;  // 使掀起的反面稍微变暗
+        // Blend based on the alpha value of pageBackColor
+        finalColor = mix(finalColor, pageBackColor, pageBackColor.a);
+    }
+
+    COLOR = finalColor;
+}
+
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1rpvy"]
+shader = SubResource("Shader_iysgs")
+shader_parameter/flip_h = false
+shader_parameter/flip_v = false
+shader_parameter/progress = 0.0
+shader_parameter/x_end_factor = 2.0
+shader_parameter/y_end_factor = -1.5
+shader_parameter/reverse_dark = 0.75
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iysgs"]
+atlas = ExtResource("2_vltdc")
+region = Rect2(0, 0, 139, 283)
+
+[sub_resource type="Shader" id="Shader_6omm5"]
+code = "shader_type canvas_item;
+uniform bool flip_h = false;
+uniform bool flip_v = false;
+uniform float progress : hint_range(0.0, 1.0, 0.001) = 0.0;
+uniform float x_end_factor : hint_range(0.5, 3.0, 0.001) = 2.0;
+uniform float y_end_factor : hint_range(-3.0, 1.0, 0.001) = -1.5;
+uniform float reverse_dark : hint_range(0.2, 1.0, 0.01) = 0.75;
+const vec2 scale = vec2(1.,1.);
+
+vec2 Line2point(vec2 linePoint,vec2 lineDire,vec2 point) {
+	lineDire = normalize(lineDire);
+	vec2 line2Ori = - linePoint - dot(-linePoint,lineDire)*lineDire;
+	vec2 p2Ori = - point - dot(-point,lineDire)*lineDire;
+	return line2Ori-p2Ori;
+	}
+
+vec4 ColorWithA(vec4 oldCol,vec4 newCol){
+	vec4 finalCol;
+	if((newCol.a + oldCol.a)>=1.)
+	{
+		finalCol.rgb = newCol.rgb ;
+		finalCol.a =1.0;
+	}
+	else{
+		finalCol.rgb = newCol.a/(newCol.a + oldCol.a)*newCol.rgb + oldCol.a/(newCol.a + oldCol.a)*oldCol.rgb;
+		finalCol.a = oldCol.a +newCol.a;
+		}
+	return 	finalCol;
+	}
+
+void fragment() {
+    vec2 uv = UV;
+	vec2 mouse_pos = (1.0 / TEXTURE_PIXEL_SIZE) * vec2(x_end_factor * progress, (y_end_factor - 1.0) * progress + 1.0);
+
+	if (flip_h) {uv.x = 1.0 - uv.x;}
+	if (flip_v) {uv.y = 1.0 - uv.y;}
+
+	vec4 finalColor = vec4(0.0); // Initialize with transparent color
+	float scale_min = scale.x/scale.y;
+	vec2 uv_max = vec2(scale_min,1.);
+	float trueScale;
+	if(scale.y<scale.x){
+		scale_min = scale.y/scale.x;
+		uv.y = uv.y * scale_min;
+		uv_max = vec2(1.,scale_min);
+		trueScale = scale.x;
+		}
+	else{
+		uv.x = uv.x*scale_min;
+		trueScale = scale.y;
+	}
+
+	vec2 pPos = uv / TEXTURE_PIXEL_SIZE * trueScale;
+	if (mouse_pos.x>-0.0001)
+	{
+		vec2 left_bottom = vec2(0.,uv_max.y/TEXTURE_PIXEL_SIZE.y * trueScale);
+		vec2 midpoint = (mouse_pos - left_bottom)/2. + left_bottom;
+		vec2 midDirect = normalize(vec2(-(mouse_pos-left_bottom).y,(mouse_pos-left_bottom).x));
+		//bg
+
+		//pageback
+		vec2 sharpPoint = vec2(0.,midpoint.y - midDirect.y/midDirect.x * midpoint.x);
+		vec2 flipEdgeDire = normalize(sharpPoint - mouse_pos);
+		//pagebackBottom
+		vec2 sharpPointB = vec2(midpoint.x-midDirect.x/midDirect.y * (midpoint-left_bottom).y,left_bottom.y);
+		vec2 flipEdgeDireB = normalize(sharpPointB - mouse_pos);
+
+		float cyOriOff = length(mouse_pos-left_bottom);
+		if (cyOriOff>100.) cyOriOff = 100.;
+		float cyR = cyOriOff*2./PI;
+		float pageHDire = PI/6.;
+		vec2 midlineToP = Line2point(midpoint,midDirect,pPos);
+		vec2 sideEdgeToP = Line2point(mouse_pos,flipEdgeDire,pPos);
+		vec2 BottomEdgeToP = Line2point(mouse_pos,flipEdgeDireB,pPos);
+
+		vec2 cyOriToP = midlineToP - normalize(mouse_pos- left_bottom)*cyOriOff;
+		vec2 cyEdgeToP = midlineToP - normalize(mouse_pos- left_bottom)*(cyOriOff-cyR);
+
+		bool atBG = (cyOriToP).x<=-0.01;
+		bool atPageBack = !atBG&&(sideEdgeToP.y>0.)&&(BottomEdgeToP.x<=0.);
+		bool atCy = cyEdgeToP.x >=0. && (cyOriToP).x<=0.;
+		bool atCyPage = false;
+		vec2 uvCy ;
+		vec2 uvCyB ;
+
+		float shadow = 1.;
+		if (atCy){
+			vec2 cyOri = pPos-cyOriToP;
+			vec2 trueDis = cyR*  asin(length(cyOriToP)/cyR)*normalize(cyOriToP);
+			vec2 truePos = cyOri+trueDis;
+
+			vec2 sideEdgeToTP = Line2point(mouse_pos,flipEdgeDire,truePos);
+			vec2 BottomEdgeToTP = Line2point(mouse_pos,flipEdgeDireB,truePos);
+			uvCyB = truePos * TEXTURE_PIXEL_SIZE /trueScale;
+			shadow *= 1.-pow(length(trueDis)/(cyR*PI/2.),3.);
+
+			if ((BottomEdgeToTP.x<0.)&& (sideEdgeToTP.y>0.))
+				{
+					atCyPage = true;
+					uvCy = vec2(length(sideEdgeToTP),left_bottom.y-length(BottomEdgeToTP))*TEXTURE_PIXEL_SIZE /trueScale;
+				}
+
+			if ((uvCyB.x > uv_max.x)||(uvCyB.y > uv_max.y)||(uvCyB.x <= 0.)|| (uvCyB.y <= 0.))
+				atCy =false;
+		}
+
+    // Page
+    if (!atBG && !atCy) {
+		vec2 temp_uv = uv;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 color = texture(TEXTURE, temp_uv);
+        finalColor = color;
+    }
+
+    // cyBottom
+    if (atCy) {
+		vec2 temp_uv = uvCyB;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 cyColor = texture(TEXTURE, temp_uv);
+        finalColor = cyColor;
+    }
+
+    if (atCyPage) {
+		vec2 temp_uv = uvCy;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 cyPageColor = texture(TEXTURE, temp_uv);
+        cyPageColor.rgb *= reverse_dark;
+        // Blend based on the alpha value of cyPageColor
+        finalColor = mix(finalColor, cyPageColor, cyPageColor.a);
+    }
+	else if (atPageBack) {
+        vec2 temp_uv = vec2(length(sideEdgeToP), left_bottom.y - length(BottomEdgeToP)) * TEXTURE_PIXEL_SIZE / trueScale;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 pageBackColor = texture(TEXTURE, temp_uv);
+        pageBackColor.rgb *= reverse_dark;  // 使掀起的反面稍微变暗
+        // Blend based on the alpha value of pageBackColor
+        finalColor = mix(finalColor, pageBackColor, pageBackColor.a);
+    }
+
+    COLOR = finalColor;
+}
+
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ad6s"]
+shader = SubResource("Shader_6omm5")
+shader_parameter/flip_h = false
+shader_parameter/flip_v = false
+shader_parameter/progress = 0.0
+shader_parameter/x_end_factor = 2.0
+shader_parameter/y_end_factor = -1.5
+shader_parameter/reverse_dark = 0.75
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_sb8jg"]
+load_path = "res://.godot/imported/Cutscene1.png-ea749ffdb6a303257b7a994e2fd0ce5e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vltdc"]
+atlas = SubResource("CompressedTexture2D_sb8jg")
+region = Rect2(991, 0, 545, 1024)
+
+[sub_resource type="Shader" id="Shader_7136s"]
+code = "shader_type canvas_item;
+uniform bool flip_h = false;
+uniform bool flip_v = false;
+uniform float progress : hint_range(0.0, 1.0, 0.001) = 0.0;
+uniform float x_end_factor : hint_range(0.5, 3.0, 0.001) = 2.0;
+uniform float y_end_factor : hint_range(-3.0, 1.0, 0.001) = -1.5;
+uniform float reverse_dark : hint_range(0.2, 1.0, 0.01) = 0.75;
+const vec2 scale = vec2(1.,1.);
+
+vec2 Line2point(vec2 linePoint,vec2 lineDire,vec2 point) {
+	lineDire = normalize(lineDire);
+	vec2 line2Ori = - linePoint - dot(-linePoint,lineDire)*lineDire;
+	vec2 p2Ori = - point - dot(-point,lineDire)*lineDire;
+	return line2Ori-p2Ori;
+	}
+
+vec4 ColorWithA(vec4 oldCol,vec4 newCol){
+	vec4 finalCol;
+	if((newCol.a + oldCol.a)>=1.)
+	{
+		finalCol.rgb = newCol.rgb ;
+		finalCol.a =1.0;
+	}
+	else{
+		finalCol.rgb = newCol.a/(newCol.a + oldCol.a)*newCol.rgb + oldCol.a/(newCol.a + oldCol.a)*oldCol.rgb;
+		finalCol.a = oldCol.a +newCol.a;
+		}
+	return 	finalCol;
+	}
+
+void fragment() {
+    vec2 uv = UV;
+	vec2 mouse_pos = (1.0 / TEXTURE_PIXEL_SIZE) * vec2(x_end_factor * progress, (y_end_factor - 1.0) * progress + 1.0);
+
+	if (flip_h) {uv.x = 1.0 - uv.x;}
+	if (flip_v) {uv.y = 1.0 - uv.y;}
+
+	vec4 finalColor = vec4(0.0); // Initialize with transparent color
+	float scale_min = scale.x/scale.y;
+	vec2 uv_max = vec2(scale_min,1.);
+	float trueScale;
+	if(scale.y<scale.x){
+		scale_min = scale.y/scale.x;
+		uv.y = uv.y * scale_min;
+		uv_max = vec2(1.,scale_min);
+		trueScale = scale.x;
+		}
+	else{
+		uv.x = uv.x*scale_min;
+		trueScale = scale.y;
+	}
+
+	vec2 pPos = uv / TEXTURE_PIXEL_SIZE * trueScale;
+	if (mouse_pos.x>-0.0001)
+	{
+		vec2 left_bottom = vec2(0.,uv_max.y/TEXTURE_PIXEL_SIZE.y * trueScale);
+		vec2 midpoint = (mouse_pos - left_bottom)/2. + left_bottom;
+		vec2 midDirect = normalize(vec2(-(mouse_pos-left_bottom).y,(mouse_pos-left_bottom).x));
+		//bg
+
+		//pageback
+		vec2 sharpPoint = vec2(0.,midpoint.y - midDirect.y/midDirect.x * midpoint.x);
+		vec2 flipEdgeDire = normalize(sharpPoint - mouse_pos);
+		//pagebackBottom
+		vec2 sharpPointB = vec2(midpoint.x-midDirect.x/midDirect.y * (midpoint-left_bottom).y,left_bottom.y);
+		vec2 flipEdgeDireB = normalize(sharpPointB - mouse_pos);
+
+		float cyOriOff = length(mouse_pos-left_bottom);
+		if (cyOriOff>100.) cyOriOff = 100.;
+		float cyR = cyOriOff*2./PI;
+		float pageHDire = PI/6.;
+		vec2 midlineToP = Line2point(midpoint,midDirect,pPos);
+		vec2 sideEdgeToP = Line2point(mouse_pos,flipEdgeDire,pPos);
+		vec2 BottomEdgeToP = Line2point(mouse_pos,flipEdgeDireB,pPos);
+
+		vec2 cyOriToP = midlineToP - normalize(mouse_pos- left_bottom)*cyOriOff;
+		vec2 cyEdgeToP = midlineToP - normalize(mouse_pos- left_bottom)*(cyOriOff-cyR);
+
+		bool atBG = (cyOriToP).x<=-0.01;
+		bool atPageBack = !atBG&&(sideEdgeToP.y>0.)&&(BottomEdgeToP.x<=0.);
+		bool atCy = cyEdgeToP.x >=0. && (cyOriToP).x<=0.;
+		bool atCyPage = false;
+		vec2 uvCy ;
+		vec2 uvCyB ;
+
+		float shadow = 1.;
+		if (atCy){
+			vec2 cyOri = pPos-cyOriToP;
+			vec2 trueDis = cyR*  asin(length(cyOriToP)/cyR)*normalize(cyOriToP);
+			vec2 truePos = cyOri+trueDis;
+
+			vec2 sideEdgeToTP = Line2point(mouse_pos,flipEdgeDire,truePos);
+			vec2 BottomEdgeToTP = Line2point(mouse_pos,flipEdgeDireB,truePos);
+			uvCyB = truePos * TEXTURE_PIXEL_SIZE /trueScale;
+			shadow *= 1.-pow(length(trueDis)/(cyR*PI/2.),3.);
+
+			if ((BottomEdgeToTP.x<0.)&& (sideEdgeToTP.y>0.))
+				{
+					atCyPage = true;
+					uvCy = vec2(length(sideEdgeToTP),left_bottom.y-length(BottomEdgeToTP))*TEXTURE_PIXEL_SIZE /trueScale;
+				}
+
+			if ((uvCyB.x > uv_max.x)||(uvCyB.y > uv_max.y)||(uvCyB.x <= 0.)|| (uvCyB.y <= 0.))
+				atCy =false;
+		}
+
+    // Page
+    if (!atBG && !atCy) {
+		vec2 temp_uv = uv;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 color = texture(TEXTURE, temp_uv);
+        finalColor = color;
+    }
+
+    // cyBottom
+    if (atCy) {
+		vec2 temp_uv = uvCyB;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 cyColor = texture(TEXTURE, temp_uv);
+        finalColor = cyColor;
+    }
+
+    if (atCyPage) {
+		vec2 temp_uv = uvCy;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 cyPageColor = texture(TEXTURE, temp_uv);
+        cyPageColor.rgb *= reverse_dark;
+        // Blend based on the alpha value of cyPageColor
+        finalColor = mix(finalColor, cyPageColor, cyPageColor.a);
+    }
+	else if (atPageBack) {
+        vec2 temp_uv = vec2(length(sideEdgeToP), left_bottom.y - length(BottomEdgeToP)) * TEXTURE_PIXEL_SIZE / trueScale;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 pageBackColor = texture(TEXTURE, temp_uv);
+        pageBackColor.rgb *= reverse_dark;  // 使掀起的反面稍微变暗
+        // Blend based on the alpha value of pageBackColor
+        finalColor = mix(finalColor, pageBackColor, pageBackColor.a);
+    }
+
+    COLOR = finalColor;
+}
+
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eejac"]
+shader = SubResource("Shader_7136s")
+shader_parameter/flip_h = false
+shader_parameter/flip_v = false
+shader_parameter/progress = 0.0
+shader_parameter/x_end_factor = 2.0
+shader_parameter/y_end_factor = -1.5
+shader_parameter/reverse_dark = 0.75
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7eg0p"]
+load_path = "res://.godot/imported/Cutscene1.png-ea749ffdb6a303257b7a994e2fd0ce5e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjrx4"]
+atlas = SubResource("CompressedTexture2D_7eg0p")
+region = Rect2(411, 0, 582, 1024)
+
+[sub_resource type="Shader" id="Shader_46ak0"]
+code = "shader_type canvas_item;
+uniform bool flip_h = false;
+uniform bool flip_v = false;
+uniform float progress : hint_range(0.0, 1.0, 0.001) = 0.0;
+uniform float x_end_factor : hint_range(0.5, 3.0, 0.001) = 2.0;
+uniform float y_end_factor : hint_range(-3.0, 1.0, 0.001) = -1.5;
+uniform float reverse_dark : hint_range(0.2, 1.0, 0.01) = 0.75;
+const vec2 scale = vec2(1.,1.);
+
+vec2 Line2point(vec2 linePoint,vec2 lineDire,vec2 point) {
+	lineDire = normalize(lineDire);
+	vec2 line2Ori = - linePoint - dot(-linePoint,lineDire)*lineDire;
+	vec2 p2Ori = - point - dot(-point,lineDire)*lineDire;
+	return line2Ori-p2Ori;
+	}
+
+vec4 ColorWithA(vec4 oldCol,vec4 newCol){
+	vec4 finalCol;
+	if((newCol.a + oldCol.a)>=1.)
+	{
+		finalCol.rgb = newCol.rgb ;
+		finalCol.a =1.0;
+	}
+	else{
+		finalCol.rgb = newCol.a/(newCol.a + oldCol.a)*newCol.rgb + oldCol.a/(newCol.a + oldCol.a)*oldCol.rgb;
+		finalCol.a = oldCol.a +newCol.a;
+		}
+	return 	finalCol;
+	}
+
+void fragment() {
+    vec2 uv = UV;
+	vec2 mouse_pos = (1.0 / TEXTURE_PIXEL_SIZE) * vec2(x_end_factor * progress, (y_end_factor - 1.0) * progress + 1.0);
+
+	if (flip_h) {uv.x = 1.0 - uv.x;}
+	if (flip_v) {uv.y = 1.0 - uv.y;}
+
+	vec4 finalColor = vec4(0.0); // Initialize with transparent color
+	float scale_min = scale.x/scale.y;
+	vec2 uv_max = vec2(scale_min,1.);
+	float trueScale;
+	if(scale.y<scale.x){
+		scale_min = scale.y/scale.x;
+		uv.y = uv.y * scale_min;
+		uv_max = vec2(1.,scale_min);
+		trueScale = scale.x;
+		}
+	else{
+		uv.x = uv.x*scale_min;
+		trueScale = scale.y;
+	}
+
+	vec2 pPos = uv / TEXTURE_PIXEL_SIZE * trueScale;
+	if (mouse_pos.x>-0.0001)
+	{
+		vec2 left_bottom = vec2(0.,uv_max.y/TEXTURE_PIXEL_SIZE.y * trueScale);
+		vec2 midpoint = (mouse_pos - left_bottom)/2. + left_bottom;
+		vec2 midDirect = normalize(vec2(-(mouse_pos-left_bottom).y,(mouse_pos-left_bottom).x));
+		//bg
+
+		//pageback
+		vec2 sharpPoint = vec2(0.,midpoint.y - midDirect.y/midDirect.x * midpoint.x);
+		vec2 flipEdgeDire = normalize(sharpPoint - mouse_pos);
+		//pagebackBottom
+		vec2 sharpPointB = vec2(midpoint.x-midDirect.x/midDirect.y * (midpoint-left_bottom).y,left_bottom.y);
+		vec2 flipEdgeDireB = normalize(sharpPointB - mouse_pos);
+
+		float cyOriOff = length(mouse_pos-left_bottom);
+		if (cyOriOff>100.) cyOriOff = 100.;
+		float cyR = cyOriOff*2./PI;
+		float pageHDire = PI/6.;
+		vec2 midlineToP = Line2point(midpoint,midDirect,pPos);
+		vec2 sideEdgeToP = Line2point(mouse_pos,flipEdgeDire,pPos);
+		vec2 BottomEdgeToP = Line2point(mouse_pos,flipEdgeDireB,pPos);
+
+		vec2 cyOriToP = midlineToP - normalize(mouse_pos- left_bottom)*cyOriOff;
+		vec2 cyEdgeToP = midlineToP - normalize(mouse_pos- left_bottom)*(cyOriOff-cyR);
+
+		bool atBG = (cyOriToP).x<=-0.01;
+		bool atPageBack = !atBG&&(sideEdgeToP.y>0.)&&(BottomEdgeToP.x<=0.);
+		bool atCy = cyEdgeToP.x >=0. && (cyOriToP).x<=0.;
+		bool atCyPage = false;
+		vec2 uvCy ;
+		vec2 uvCyB ;
+
+		float shadow = 1.;
+		if (atCy){
+			vec2 cyOri = pPos-cyOriToP;
+			vec2 trueDis = cyR*  asin(length(cyOriToP)/cyR)*normalize(cyOriToP);
+			vec2 truePos = cyOri+trueDis;
+
+			vec2 sideEdgeToTP = Line2point(mouse_pos,flipEdgeDire,truePos);
+			vec2 BottomEdgeToTP = Line2point(mouse_pos,flipEdgeDireB,truePos);
+			uvCyB = truePos * TEXTURE_PIXEL_SIZE /trueScale;
+			shadow *= 1.-pow(length(trueDis)/(cyR*PI/2.),3.);
+
+			if ((BottomEdgeToTP.x<0.)&& (sideEdgeToTP.y>0.))
+				{
+					atCyPage = true;
+					uvCy = vec2(length(sideEdgeToTP),left_bottom.y-length(BottomEdgeToTP))*TEXTURE_PIXEL_SIZE /trueScale;
+				}
+
+			if ((uvCyB.x > uv_max.x)||(uvCyB.y > uv_max.y)||(uvCyB.x <= 0.)|| (uvCyB.y <= 0.))
+				atCy =false;
+		}
+
+    // Page
+    if (!atBG && !atCy) {
+		vec2 temp_uv = uv;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 color = texture(TEXTURE, temp_uv);
+        finalColor = color;
+    }
+
+    // cyBottom
+    if (atCy) {
+		vec2 temp_uv = uvCyB;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 cyColor = texture(TEXTURE, temp_uv);
+        finalColor = cyColor;
+    }
+
+    if (atCyPage) {
+		vec2 temp_uv = uvCy;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 cyPageColor = texture(TEXTURE, temp_uv);
+        cyPageColor.rgb *= reverse_dark;
+        // Blend based on the alpha value of cyPageColor
+        finalColor = mix(finalColor, cyPageColor, cyPageColor.a);
+    }
+	else if (atPageBack) {
+        vec2 temp_uv = vec2(length(sideEdgeToP), left_bottom.y - length(BottomEdgeToP)) * TEXTURE_PIXEL_SIZE / trueScale;
+		if (flip_h) {temp_uv = vec2(1.0 - temp_uv.x, temp_uv.y);}
+		if (flip_v) {temp_uv = vec2(temp_uv.x, 1.0 - temp_uv.y);}
+        vec4 pageBackColor = texture(TEXTURE, temp_uv);
+        pageBackColor.rgb *= reverse_dark;  // 使掀起的反面稍微变暗
+        // Blend based on the alpha value of pageBackColor
+        finalColor = mix(finalColor, pageBackColor, pageBackColor.a);
+    }
+
+    COLOR = finalColor;
+}
+
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iysgs"]
+shader = SubResource("Shader_46ak0")
+shader_parameter/flip_h = false
+shader_parameter/flip_v = false
+shader_parameter/progress = 0.0
+shader_parameter/x_end_factor = 2.0
+shader_parameter/y_end_factor = -1.5
+shader_parameter/reverse_dark = 0.75
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_33sem"]
+load_path = "res://.godot/imported/Cutscene1.png-ea749ffdb6a303257b7a994e2fd0ce5e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_46ak0"]
+atlas = SubResource("CompressedTexture2D_33sem")
+region = Rect2(2, 0, 409, 1024)
+
+[node name="Intro" type="Node2D"]
+position = Vector2(130, 45)
+scale = Vector2(0.9, 0.9)
+script = ExtResource("1_vltdc")
+
+[node name="6" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_vltdc")
+position = Vector2(948, 546)
+scale = Vector2(3.64, 3.64)
+texture = SubResource("AtlasTexture_7136s")
+
+[node name="5" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_46ak0")
+position = Vector2(948, 546)
+scale = Vector2(3.64, 3.64)
+texture = SubResource("AtlasTexture_6omm5")
+
+[node name="4" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_1rpvy")
+position = Vector2(948, 546)
+scale = Vector2(3.64, 3.64)
+texture = SubResource("AtlasTexture_iysgs")
+
+[node name="3" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_4ad6s")
+position = Vector2(943, 547)
+texture = SubResource("AtlasTexture_vltdc")
+
+[node name="2" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_eejac")
+position = Vector2(927, 545)
+texture = SubResource("AtlasTexture_gjrx4")
+
+[node name="1" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_iysgs")
+position = Vector2(1016, 545)
+texture = SubResource("AtlasTexture_46ak0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -10
+offset_left = -219.0
+offset_top = -130.0
+offset_right = 2066.0
+offset_bottom = 1250.0
+color = Color(0, 0, 0, 1)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bnpre57aaiihv"]
+[gd_scene load_steps=8 format=3 uid="uid://dxmmor12a0b6k"]
 
 [ext_resource type="Script" uid="uid://4hdgfo8xlgid" path="res://Scripts/game_ui.gd" id="1_bw2rt"]
 [ext_resource type="Texture2D" uid="uid://s44k0s0v4ptt" path="res://Scenes/Sprites/Textures/Buttons.png" id="1_gek4i"]
@@ -76,6 +76,17 @@ size_flags_vertical = 4
 button_mask = 0
 icon = SubResource("AtlasTexture_obik5")
 
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer/Teleport"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.865
+anchor_right = 0.865
+offset_left = -20.47
+offset_top = -12.0
+offset_right = 20.53
+offset_bottom = 11.0
+text = "--:--"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer2"]
 texture_filter = 1
 layout_mode = 2
@@ -108,6 +119,7 @@ button_mask = 0
 icon = SubResource("AtlasTexture_bw2rt")
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
