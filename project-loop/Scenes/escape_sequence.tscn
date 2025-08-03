@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=4 uid="uid://bwfn1hglr5j81"]
+[gd_scene load_steps=53 format=4 uid="uid://jp1jqqig1osp"]
 
 [ext_resource type="Script" uid="uid://xmnpretlwywl" path="res://Scripts/mobius.gd" id="1_bgdy3"]
 [ext_resource type="Texture2D" uid="uid://cxihkrhbltn3m" path="res://Scenes/Sprites/Mobius/Mobius_Falling.png" id="2_hsio2"]
