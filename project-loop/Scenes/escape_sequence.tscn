@@ -1052,5 +1052,23 @@ grow_vertical = 2
 [node name="inGameUI" parent="UiCanvasLayer/Uiholder" instance=ExtResource("6_31544")]
 layout_mode = 1
 
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -161.0
+offset_top = -1118.0
+offset_right = 148.0
+offset_bottom = -1089.0
+bbcode_enabled = true
+text = "[center][shake][color=red]T[/color] To teleport at your mouse location!
+"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+offset_left = -175.0
+offset_top = -1351.0
+offset_right = 164.0
+offset_bottom = -1292.0
+bbcode_enabled = true
+text = "[center][shake][color=red]the black hole is growing underneath my feet!
+"
+
 [connection signal="timeout" from="Mobius/Droptimer" to="Mobius" method="_on_droptimer_timeout"]
 [connection signal="body_entered" from="Tilemap/Area2D" to="Mobius" method="_on_area_2d_body_entered"]
