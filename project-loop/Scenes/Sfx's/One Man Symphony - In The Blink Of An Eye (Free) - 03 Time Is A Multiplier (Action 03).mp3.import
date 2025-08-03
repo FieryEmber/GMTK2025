@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://3ka5fgiobsnd"
+path="res://.godot/imported/One Man Symphony - In The Blink Of An Eye (Free) - 03 Time Is A Multiplier (Action 03).mp3-6ed885db875502ffdab7b7ea9f98a2de.mp3str"
+
+[deps]
+
+source_file="res://Scenes/Sfx's/One Man Symphony - In The Blink Of An Eye (Free) - 03 Time Is A Multiplier (Action 03).mp3"
+dest_files=["res://.godot/imported/One Man Symphony - In The Blink Of An Eye (Free) - 03 Time Is A Multiplier (Action 03).mp3-6ed885db875502ffdab7b7ea9f98a2de.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

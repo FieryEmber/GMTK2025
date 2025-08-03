@@ -94,11 +94,27 @@ func _physics_process(delta):
 		
 	#Teleport
 	if Input.is_action_just_pressed("teleport") and can_teleport and tp_cooldown_over:
-		self.position = get_global_mouse_position()
-		self.velocity.y = 0
-		started_input = true
-		tpCooldown.start()
-		tp_cooldown_over = false
+		var target_position = get_global_mouse_position()
+
+		var shape = $CollisionShape2D.shape
+		var query = PhysicsShapeQueryParameters2D.new()
+		query.shape = shape
+		query.transform = Transform2D(0, target_position)
+		query.margin = 0.1
+		query.collision_mask = collision_mask
+		
+		var space_state = get_world_2d().direct_space_state
+		var result = space_state.intersect_shape(query, 1)
+		if result.is_empty():
+			# No collision — safe to teleport
+			global_position = target_position
+			velocity.y = 0
+			started_input = true
+			tpCooldown.start()
+			tp_cooldown_over = false
+		else:
+			# Collision at target position — don't teleport
+			print("Teleport blocked at position: ", target_position)
 	
 	if Input.is_action_just_pressed("dev"):
 		self.position = get_global_mouse_position()
@@ -203,3 +219,4 @@ func _on_droptimer_timeout() -> void:
 
 func _on_teleport_cooldown_timeout() -> void:
 	tp_cooldown_over = true
+	tpCooldown.stop()
