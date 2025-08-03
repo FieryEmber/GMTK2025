@@ -18,11 +18,11 @@ var black_hole_active = false
 
 
 var can_move_right = true
-var can_move_left = true
-var can_move_down = true
-var can_jump = true 
-var can_double_jump = true
-var can_teleport = true
+var can_move_left = false
+var can_move_down = false
+var can_jump = false 
+var can_double_jump = false
+var can_teleport = false
 var started_input = true
 
 
