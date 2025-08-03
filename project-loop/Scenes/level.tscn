@@ -805,7 +805,7 @@ unlock_double_jump = true
 texture = ExtResource("10_qxfql")
 
 [node name="HelmetPiece5" parent="." instance=ExtResource("7_8c0lf")]
-position = Vector2(-3440, -2)
+position = Vector2(-1054, -614)
 unlock_teleport = true
 
 [node name="Sprite2D" parent="HelmetPiece5" index="0"]
