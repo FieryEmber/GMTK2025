@@ -6,6 +6,7 @@ class_name Mobius
 @export var JUMP_VELOCITY = -400
 
 @onready var droptimer: Timer = $Droptimer
+@onready var tpCooldown: Timer = $TeleportCooldown
 
 var spawn_position = Vector2.ZERO
 var spawn_position_2 = Vector2(-100, 0)
@@ -29,7 +30,7 @@ const GRAVITY = 900
 const JUMP_CUT_MULTIPLIER = 0.2
 const MAX_JUMPS = 2
 
-var has_teleported = false
+var tp_cooldown_over = false
 
 @onready var anim = $AnimatedSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -82,11 +83,12 @@ func _physics_process(delta):
 		velocity.y *= JUMP_CUT_MULTIPLIER
 		
 	#Teleport
-	if Input.is_action_just_pressed("teleport") and can_teleport and !has_teleported:
+	if Input.is_action_just_pressed("teleport") and can_teleport and tp_cooldown_over:
 		self.position = get_global_mouse_position()
 		self.velocity.y = 0
 		started_input = true
-		has_teleported = true
+		tpCooldown.start()
+		tp_cooldown_over = false
 	
 	if Input.is_action_just_pressed("dev"):
 		self.position = get_global_mouse_position()
@@ -98,7 +100,6 @@ func _physics_process(delta):
 
 	# Reset jump count when on floor
 	if is_on_floor():
-		has_teleported = false
 		jump_count = 0
 		if is_moving:
 			anim.play("walking")
@@ -167,6 +168,8 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		black_hole.stop_growing()
 		black_hole_active = false
 		started_input = false
+		tp_cooldown_over = true
+		tpCooldown.stop()
 
 
 func _on_helmet_piece_piece_collected(piece: HelmetPiece) -> void:
@@ -185,7 +188,8 @@ func _on_helmet_piece_3_piece_collected(piece: HelmetPiece) -> void:
 	black_hole.growth_rate = 0.60
 	spawn_checkpoint = 3
 
-
 func _on_droptimer_timeout() -> void:
 	set_collision_mask_value(2,true)
-	pass # Replace with function body.
+
+func _on_teleport_cooldown_timeout() -> void:
+	tp_cooldown_over = true

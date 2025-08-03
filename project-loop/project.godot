@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="Project LOOP"
-run/main_scene="uid://bvlxjotlrqpko"
+run/main_scene="uid://c4fx4rtlf8xfh"
 config/features=PackedStringArray("4.4", "Forward Plus")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+boot_splash/image="uid://wocjkaul4voy"
 config/icon="res://Sprites/icon.svg"
 
 [display]
