@@ -17,17 +17,19 @@ var black_hole_active = false
 
 
 var can_move_right = true
-var can_move_left = true
-var can_move_down = true
+var can_move_left = false
+var can_move_down = false
 var can_jump = false 
 var can_double_jump = true
-var can_teleport = true
+var can_teleport = false
 var started_input = false
 
 
 const GRAVITY = 900
 const JUMP_CUT_MULTIPLIER = 0.2
 const MAX_JUMPS = 2
+
+var has_teleported = false
 
 @onready var anim = $AnimatedSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -81,10 +83,15 @@ func _physics_process(delta):
 		velocity.y *= JUMP_CUT_MULTIPLIER
 		
 	#Teleport
-	if Input.is_action_just_pressed("teleport") and can_teleport:
+	if Input.is_action_just_pressed("teleport") and can_teleport and !has_teleported:
 		self.position = get_global_mouse_position()
 		self.velocity.y = 0
 		started_input = true
+		has_teleported = true
+	
+	if Input.is_action_just_pressed("dev"):
+		self.position = get_global_mouse_position()
+		self.velocity.y = 0
 		
 	if started_input and not black_hole_active:
 		black_hole_active = true
@@ -92,6 +99,7 @@ func _physics_process(delta):
 
 	# Reset jump count when on floor
 	if is_on_floor():
+		has_teleported = false
 		jump_count = 0
 		if is_moving:
 			anim.play("walking")
