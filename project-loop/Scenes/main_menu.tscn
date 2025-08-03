@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bvf6spg0ts507"]
+[gd_scene load_steps=9 format=3 uid="uid://p0k8ilkw1sid"]
 
 [ext_resource type="Texture2D" uid="uid://c8k2s7wv2myen" path="res://Scenes/Sprites/StoryTextures/Mobiuscover.png" id="1_28flt"]
-[ext_resource type="Script" uid="uid://d2dc3hw4l56ak" path="res://Scripts/main_menu.gd" id="1_48xlc"]
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_48xlc"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_48xlc"]
 texture = ExtResource("1_28flt")
