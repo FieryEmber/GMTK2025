@@ -35,11 +35,21 @@ var tp_cooldown_over = false
 @onready var anim = $AnimatedSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var black_hole := $"../Tilemap/Area2D" as BlackHole
+@onready var tp_cooldown_label = $"../UiCanvasLayer/Uiholder/inGameUI/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer/Teleport/Label"
 
 var jump_count = 0
 
 func _ready() -> void:
 	spawn_position = global_position
+	tp_cooldown_label.text = "--:--"
+
+func _process(delta):
+	if tpCooldown.is_stopped():
+		tp_cooldown_label.text = "Ready"
+	else:
+		var time_left = tpCooldown.time_left
+		tp_cooldown_label.text = "Cooldown: %.1f s" % time_left
+
 
 func _physics_process(delta):
 	
