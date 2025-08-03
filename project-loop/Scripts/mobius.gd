@@ -23,7 +23,7 @@ var can_move_down = false
 var can_jump = false 
 var can_double_jump = false
 var can_teleport = false
-var started_input = false
+var started_input = true
 
 
 const GRAVITY = 900

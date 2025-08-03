@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://bvlxjotlrqpko"]
+[gd_scene load_steps=30 format=4 uid="uid://bvlxjotlrqpko"]
 
 [ext_resource type="PackedScene" path="res://Scenes/music.tscn" id="1_ha31o"]
 [ext_resource type="PackedScene" uid="uid://dxfbf4g57yf" path="res://Scenes/mobius.tscn" id="1_tumq0"]
@@ -6,12 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://cod6g8i54sqnc" path="res://Scenes/black_hole.tscn" id="3_6phgx"]
 [ext_resource type="Texture2D" uid="uid://5wpvu6bihcof" path="res://Scenes/Sprites/Textures/Tileset2.png" id="3_81xng"]
 [ext_resource type="Script" uid="uid://52pdodt7tt8q" path="res://Scripts/BlackHole.gd" id="4_81xng"]
-[ext_resource type="PackedScene" uid="uid://dxmmor12a0b6k" path="res://Scenes/game_ui.tscn" id="5_wqkje"]
+[ext_resource type="PackedScene" uid="uid://bnpre57aaiihv" path="res://Scenes/game_ui.tscn" id="5_wqkje"]
 [ext_resource type="PackedScene" uid="uid://yovpi1m0dxfq" path="res://Scenes/helmet_piece.tscn" id="7_8c0lf"]
 [ext_resource type="Texture2D" uid="uid://mrrk3gk4w4yc" path="res://Scenes/Sprites/Textures/Crystal2.png" id="8_bvt00"]
 [ext_resource type="Texture2D" uid="uid://e1un7hhtutt6" path="res://Scenes/Sprites/Textures/Crystal3.png" id="9_oqgf2"]
 [ext_resource type="Texture2D" uid="uid://qw02uxw88stp" path="res://Scenes/Sprites/Textures/Crystal4.png" id="10_qxfql"]
 [ext_resource type="Texture2D" uid="uid://demvcg1ayndjl" path="res://Scenes/Sprites/Textures/Crystal5.png" id="11_ha31o"]
+[ext_resource type="Script" uid="uid://cckxyg86kujsa" path="res://Scenes/FinishArea.gd" id="13_pa6b8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_81xng"]
 texture = ExtResource("2_6phgx")
@@ -992,12 +993,15 @@ sources/2 = SubResource("TileSetAtlasSource_8c0lf")
 [sub_resource type="CircleShape2D" id="CircleShape2D_81xng"]
 radius = 52.0096
 
-[node name="Level" type="Node2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_crh0w"]
+radius = 154.434
+
+[node name="Level2" type="Node2D"]
 
 [node name="Music" parent="." instance=ExtResource("1_ha31o")]
 
 [node name="Mobius" parent="." instance=ExtResource("1_tumq0")]
-position = Vector2(192, -5)
+position = Vector2(143, -3)
 collision_mask = 3
 
 [node name="Tilemap" type="Node2D" parent="."]
@@ -1093,12 +1097,31 @@ unlock_teleport = true
 [node name="Sprite2D" parent="HelmetPiece5" index="0"]
 texture = ExtResource("11_ha31o")
 
+[node name="FinishLine" type="Node2D" parent="."]
+position = Vector2(-751, -619)
+script = ExtResource("13_pa6b8")
+
+[node name="Area2D" type="Area2D" parent="FinishLine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinishLine/Area2D"]
+shape = SubResource("CircleShape2D_crh0w")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -64.0
+offset_top = -93.0
+offset_right = 190.0
+offset_bottom = -49.0
+bbcode_enabled = true
+text = "[shake][color=red]Find the pieces"
+
 [connection signal="body_entered" from="Tilemap/Area2D" to="Mobius" method="_on_area_2d_body_entered"]
 [connection signal="piece_collected" from="HelmetPiece" to="Mobius" method="_on_helmet_piece_piece_collected"]
 [connection signal="piece_collected" from="HelmetPiece2" to="Mobius" method="_on_helmet_piece_2_piece_collected"]
 [connection signal="piece_collected" from="HelmetPiece3" to="Mobius" method="_on_helmet_piece_3_piece_collected"]
 [connection signal="piece_collected" from="HelmetPiece4" to="Mobius" method="_on_helmet_piece_3_piece_collected"]
 [connection signal="piece_collected" from="HelmetPiece5" to="Mobius" method="_on_helmet_piece_3_piece_collected"]
+[connection signal="area_entered" from="FinishLine/Area2D" to="FinishLine" method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="FinishLine/Area2D" to="FinishLine" method="_on_area_2d_body_entered"]
 
 [editable path="HelmetPiece"]
 [editable path="HelmetPiece2"]
