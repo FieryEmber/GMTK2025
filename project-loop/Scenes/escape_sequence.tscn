@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cc3fnlair24kt" path="res://Scenes/Sprites/Mobius/Mobius_Jump.png" id="4_a6siw"]
 [ext_resource type="Texture2D" uid="uid://1t4oo047ad1u" path="res://Scenes/Sprites/Mobius/Mobius_Run.png" id="5_8yn00"]
 [ext_resource type="PackedScene" uid="uid://cod6g8i54sqnc" path="res://Scenes/black_hole.tscn" id="5_c8v45"]
-[ext_resource type="PackedScene" uid="uid://dxmmor12a0b6k" path="res://Scenes/game_ui.tscn" id="6_31544"]
+[ext_resource type="PackedScene" uid="uid://bnpre57aaiihv" path="res://Scenes/game_ui.tscn" id="6_31544"]
 [ext_resource type="Script" uid="uid://cckxyg86kujsa" path="res://Scenes/FinishArea.gd" id="11_hsio2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ymrf7"]
@@ -970,7 +970,7 @@ radius = 154.434
 
 [node name="Mobius" type="CharacterBody2D" parent="."]
 texture_filter = 1
-position = Vector2(29, -13878)
+position = Vector2(-2, -1190)
 collision_mask = 3
 script = ExtResource("1_bgdy3")
 
