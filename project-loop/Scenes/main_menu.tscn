@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bvf6spg0ts507"]
+[gd_scene load_steps=11 format=3 uid="uid://c213yflbm6qh7"]
 
 [ext_resource type="Texture2D" uid="uid://c8k2s7wv2myen" path="res://Scenes/Sprites/StoryTextures/Mobiuscover.png" id="1_28flt"]
 [ext_resource type="Script" uid="uid://d2dc3hw4l56ak" path="res://Scripts/main_menu.gd" id="1_48xlc"]
+[ext_resource type="PackedScene" uid="uid://dg0bo6fcyq7n8" path="res://Scenes/music.tscn" id="2_ce3w2"]
+[ext_resource type="AudioStream" uid="uid://dw8a3cke0cu1f" path="res://Scenes/Sfx's/One Man Symphony - Collateral Damage (Free) - 05 Exploration Theme 02.mp3" id="3_n45e2"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_48xlc"]
 texture = ExtResource("1_28flt")
@@ -46,6 +48,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_48xlc")
+
+[node name="Music" parent="." instance=ExtResource("2_ce3w2")]
+stream = ExtResource("3_n45e2")
 
 [node name="Image" type="Panel" parent="."]
 layout_mode = 1

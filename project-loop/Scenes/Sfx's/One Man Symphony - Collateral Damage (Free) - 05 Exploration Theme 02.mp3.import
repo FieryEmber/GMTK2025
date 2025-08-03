@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dw8a3cke0cu1f"
+path="res://.godot/imported/One Man Symphony - Collateral Damage (Free) - 05 Exploration Theme 02.mp3-f3c70e5b904ba1c77fa416f0744c50e2.mp3str"
+
+[deps]
+
+source_file="res://Scenes/Sfx's/One Man Symphony - Collateral Damage (Free) - 05 Exploration Theme 02.mp3"
+dest_files=["res://.godot/imported/One Man Symphony - Collateral Damage (Free) - 05 Exploration Theme 02.mp3-f3c70e5b904ba1c77fa416f0744c50e2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
