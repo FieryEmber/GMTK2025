@@ -6,6 +6,7 @@ extends Node2D
 @onready var _4: Sprite2D = $"4"
 @onready var _5: Sprite2D = $"5"
 @onready var _6: Sprite2D = $"6"
+@onready var end_timer: Timer = $"End timer"
 
 @onready var pages: Array = [_1, _2, _3, _4, _5, _6]
 
@@ -19,6 +20,10 @@ func _input(event: InputEvent) -> void:
 			is_turning = true
 		else:
 			print("No more pages to turn.")
+			if end_timer.is_stopped():
+				end_timer.start()
+			else:
+				pass
 
 func turn_page(page: Sprite2D):
 	var tween := create_tween()
@@ -28,3 +33,8 @@ func turn_page(page: Sprite2D):
 func _on_tween_finished():
 	current_page += 1
 	is_turning = false
+
+
+func _on_end_timer_timeout() -> void:
+	get_tree().change_scene_to_file("res://Scenes/level.tscn")
+	pass # Replace with function body.
