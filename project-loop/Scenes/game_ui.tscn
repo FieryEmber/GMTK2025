@@ -108,6 +108,7 @@ button_mask = 0
 icon = SubResource("AtlasTexture_bw2rt")
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0

@@ -768,7 +768,6 @@ shape = SubResource("CircleShape2D_81xng")
 [node name="UiCanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Uiholder" type="Control" parent="UiCanvasLayer"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
