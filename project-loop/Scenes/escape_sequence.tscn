@@ -576,7 +576,7 @@ terrain_set_0/terrain_0/color = Color(0.709804, 0, 0.313726, 1)
 sources/0 = SubResource("TileSetAtlasSource_bvt00")
 sources/3 = SubResource("TileSetAtlasSource_oqgf2")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wqkje"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bgdy3"]
 texture = ExtResource("2_reifx")
 texture_region_size = Vector2i(32, 32)
 2:0/0 = 0
@@ -633,7 +633,7 @@ texture_region_size = Vector2i(32, 32)
 1:5/0 = 0
 1:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0f350"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hsio2"]
 texture = ExtResource("3_a6siw")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
@@ -846,8 +846,8 @@ physics_layer_0/collision_layer = 1
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Floor"
 terrain_set_0/terrain_0/color = Color(0.709804, 0, 0.313726, 1)
-sources/0 = SubResource("TileSetAtlasSource_wqkje")
-sources/3 = SubResource("TileSetAtlasSource_0f350")
+sources/0 = SubResource("TileSetAtlasSource_bgdy3")
+sources/3 = SubResource("TileSetAtlasSource_hsio2")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_754fn"]
 texture = ExtResource("2_reifx")
@@ -1028,6 +1028,7 @@ tile_map_data = PackedByteArray("AAD2/wAAAgABAAMAAAD2/wEAAgABAAMAAAD2/wIAAAAIAAE
 tile_set = SubResource("TileSet_bvt00")
 
 [node name="Area2D" type="Area2D" parent="Tilemap"]
+visible = false
 scale = Vector2(18, 18)
 script = ExtResource("4_8yn00")
 
