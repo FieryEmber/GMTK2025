@@ -20,10 +20,7 @@ func _input(event: InputEvent) -> void:
 			is_turning = true
 		else:
 			print("No more pages to turn.")
-			if end_timer.is_stopped():
-				end_timer.start()
-			else:
-				pass
+			get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
 
 func turn_page(page: Sprite2D):
 	var tween := create_tween()
