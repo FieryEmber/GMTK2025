@@ -62,7 +62,6 @@ func _physics_process(delta):
 	
 	if Input.is_action_pressed("down") and can_move_down:
 		set_collision_mask_value(2,false)
-		print("moved down")
 		droptimer.start()
 	
 	# Jump
