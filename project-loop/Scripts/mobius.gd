@@ -16,12 +16,12 @@ var black_hole_active = false
 # Mobius allowed movement
 
 
-var can_move_right = true
-var can_move_left = true
-var can_move_down = true
-var can_jump = false 
-var can_double_jump = true
-var can_teleport = true
+@export var can_move_right = true
+@export var can_move_left = true
+@export var can_move_down = true
+@export var can_jump = false 
+@export var can_double_jump = true
+@export var can_teleport = true
 var started_input = false
 
 

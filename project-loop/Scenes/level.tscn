@@ -723,6 +723,11 @@ radius = 52.0096
 [node name="Mobius" parent="." instance=ExtResource("1_tumq0")]
 position = Vector2(192, -5)
 collision_mask = 3
+can_move_right = false
+can_move_left = false
+can_move_down = false
+can_double_jump = false
+can_teleport = false
 
 [node name="Tilemap" type="Node2D" parent="."]
 
@@ -768,7 +773,6 @@ shape = SubResource("CircleShape2D_81xng")
 [node name="UiCanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Uiholder" type="Control" parent="UiCanvasLayer"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
