@@ -1038,3 +1038,20 @@ offset_top = -130.0
 offset_right = 2066.0
 offset_bottom = 1250.0
 color = Color(0, 0, 0, 1)
+
+[node name="End timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+texture_filter = 1
+offset_left = -38.8889
+offset_top = 1004.44
+offset_right = 67.1111
+offset_bottom = 1031.44
+scale = Vector2(2, 2)
+bbcode_enabled = true
+text = "[shake]Lmb to turn"
+fit_content = true
+
+[connection signal="timeout" from="End timer" to="." method="_on_end_timer_timeout"]
